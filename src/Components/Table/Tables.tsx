@@ -24,9 +24,8 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
     <div>
       <button
         //Link
+        className="remove-border-action"
         style={{
-          boxShadow: "none",
-          outline: "none",
           background: "none",
           textDecoration: "none",
           color: "black",
