@@ -29,6 +29,7 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
           color: "black",
           borderStyle: "none",
           backgroundColor: "Background",
+          outline: "none",
         }}
         onClick={handleSubmit}
       >
