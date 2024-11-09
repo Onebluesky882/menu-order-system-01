@@ -21,7 +21,7 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
     // navigate(`/${tableNo}`);
   };
   return (
-    <div>
+    <div style={{ borderStyle: "none" }}>
       <button
         //Link
         style={{
@@ -29,7 +29,6 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
           color: "black",
           borderStyle: "none",
           backgroundColor: "Background",
-          outline: "none",
         }}
         onClick={handleSubmit}
       >
