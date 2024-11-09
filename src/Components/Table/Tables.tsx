@@ -21,10 +21,12 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
     // navigate(`/${tableNo}`);
   };
   return (
-    <div style={{ borderStyle: "none" }}>
+    <div>
       <button
         //Link
         style={{
+          outline: "none",
+          background: "none",
           textDecoration: "none",
           color: "black",
           borderStyle: "none",
