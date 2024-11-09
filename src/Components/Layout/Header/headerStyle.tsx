@@ -69,7 +69,10 @@ export function OrderList() {
         }}
       >
         <Link to={"/cart"}>
-          <FaClipboardList style={{ fontSize: "30", color: "#DF9E43" }} />
+          <FaClipboardList
+            className="remove-border-action"
+            style={{ fontSize: "30", color: "#DF9E43" }}
+          />
           <span
             style={{
               position: "absolute",
