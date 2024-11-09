@@ -25,6 +25,7 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
       <button
         //Link
         style={{
+          boxShadow: "none",
           outline: "none",
           background: "none",
           textDecoration: "none",
