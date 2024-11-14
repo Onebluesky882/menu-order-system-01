@@ -1,5 +1,4 @@
-import { MenuGroup } from "@/Data/MenuCategory";
-import { MenuProps, SideBarItemBase } from "./SideBarItemBase";
+import { SideBarItemBase } from "./SideBarItemBase";
 
 export const SideBarItemLeft = ({
   id,
@@ -7,7 +6,13 @@ export const SideBarItemLeft = ({
   name,
   position,
   submit,
-}: MenuGroup & MenuProps) => {
+}: {
+  id: any;
+  img: any;
+  name: any;
+  position: any;
+  submit: any;
+}) => {
   return (
     <SideBarItemBase
       id={id}

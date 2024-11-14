@@ -1,6 +1,7 @@
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { TableStatusColor } from "../OrderTableCard/tableStyle";
 
 type TableProps = {
   tableNo: string;
@@ -10,6 +11,8 @@ type TableProps = {
 type TableCardProps = {
   position: string;
 };
+
+// todo should same with order table
 
 export const TablesMap = ({ tableNo, status }: TableProps) => {
   const navigate = useNavigate();
@@ -24,7 +27,6 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
     <div>
       <button
         //Link
-        className="remove-border-action"
         style={{
           background: "none",
           textDecoration: "none",
@@ -37,7 +39,7 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
         {" "}
         <div
           style={{
-            ...GetStatusStyles(status),
+            ...TableStatusColor(status),
             padding: "25px",
             borderRadius: "999px",
             margin: "10px",
@@ -57,23 +59,6 @@ export const TablesMap = ({ tableNo, status }: TableProps) => {
       </button>
     </div>
   );
-};
-
-export const GetStatusStyles = (status: string): React.CSSProperties => {
-  switch (status) {
-    case "AVAILABLE":
-      return { backgroundColor: "#B2D3AC" };
-    case "OCCUPIED":
-      return { backgroundColor: "#E98874" };
-    case "CLEANING":
-      return { backgroundColor: "#ADB2BF" };
-    case "RESERVED":
-      return { backgroundColor: "#F7CC43" };
-    default:
-      return {
-        backgroundColor: "white",
-      };
-  }
 };
 
 export const TableContainer = ({ children }: React.PropsWithChildren) => {

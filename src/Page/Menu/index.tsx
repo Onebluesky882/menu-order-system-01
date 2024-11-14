@@ -21,13 +21,12 @@ const Menu = () => {
 
   return (
     <div>
-      <h1>{table.tableNo}</h1>
-      <h2 style={{ textAlign: "center" }}>
-        รายการอาหาร
+      <h2 style={{ textAlign: "center" }}> โต๊ะ {table.tableNo}</h2>
+      <p style={{ textAlign: "center" }}>
         {orders.map((i) => (
           <CartOrderCard order={i} />
         ))}
-      </h2>
+      </p>
       <SidebarLeft submit={handleSubmit} />
       <SidebarRight submit={handleSubmit} />
       <div className="ProductCardContainer">

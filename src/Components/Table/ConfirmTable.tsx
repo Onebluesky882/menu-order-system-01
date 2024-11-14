@@ -1,4 +1,4 @@
-import "./glass.css";
+import css from "./style.module.css";
 
 type ConfirmPopupProps = {
   message: string;
@@ -15,47 +15,18 @@ export const ConfirmTable = ({
   if (isOpen) return null;
 
   return (
-    <div style={overlayStyles} className="glass">
-      <div style={popupStyles}>
+    <div className={css["overlay"]}>
+      <div className={css["popup"]}>
         <p>{message}</p>
         <div>
-          <button onClick={onConfirm} style={buttonStyles}>
+          <button onClick={onConfirm} className={css["button"]}>
             Confirm
           </button>
-          <button onClick={onCancel} style={buttonStyles}>
+          <button onClick={onCancel} className={css["button"]}>
             Cancel
           </button>
         </div>
       </div>
     </div>
   );
-};
-
-// Styles
-const overlayStyles: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: "999",
-};
-
-const popupStyles: React.CSSProperties = {
-  backgroundColor: "white",
-  padding: "20px",
-  borderRadius: "8px",
-  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
-  textAlign: "center",
-};
-
-const buttonStyles: React.CSSProperties = {
-  margin: "10px",
-  padding: "10px 20px",
-  cursor: "pointer",
-  borderRadius: "5px",
 };

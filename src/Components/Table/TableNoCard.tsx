@@ -17,8 +17,6 @@ const TableNoCard = ({ tableNo }: { tableNo: string }) => {
     setIsPopupOpen(true);
   };
 
-  //test test
-
   const hadleCancel = () => {
     setIsPopupOpen(false);
     navigate(`/tables`);

@@ -16,7 +16,7 @@ const Footer = () => {
             <h1> </h1>
           </nav>
         </Link>
-        <Link to="/cart" style={{ textDecoration: "none", display: "inline" }}>
+        <Link to="/menu" style={{ textDecoration: "none", display: "inline" }}>
           <nav style={{ ...navStyle }}>
             <span className="nav-span-order">
               <p
@@ -31,7 +31,7 @@ const Footer = () => {
             <li style={{ listStyleType: "none" }}>
               <FaClipboardList {...iconStyle} />
             </li>
-            Order
+            menu
           </nav>
         </Link>
         <Link to="/waiter" style={{ textDecoration: "none" }}>
