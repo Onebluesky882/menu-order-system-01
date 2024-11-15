@@ -1,6 +1,6 @@
 import { MenuItem } from "@/types/MenuItem";
 
-export const menu: MenuItem[] = [
+export const menu = [
   {
     id: "60baa77d-9d71-46e6-957f-a7786ba7ea79",
     name: "เนื้อสามชั้น",

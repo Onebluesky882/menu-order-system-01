@@ -16,9 +16,7 @@ export const MenuCard = ({ id, image, name, price }: MenuCardProps) => {
       <img src={image} alt={image} width={160} />
 
       <h3>{name}</h3>
-
       <p>{`ราคา : ${price} บาท`}</p>
-
       <div className={css["icon-section"]}>
         <CiCircleMinus onClick={() => onMinus({ menuId: id })} />
         <p> {`จำนวนสินค้า : ${amount}`}</p>

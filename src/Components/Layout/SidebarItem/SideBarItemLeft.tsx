@@ -1,25 +1,5 @@
-import { SideBarItemBase } from "./SideBarItemBase";
+import { MenuGroupProps, SideBarItemBase } from "./SideBarItemBase";
 
-export const SideBarItemLeft = ({
-  id,
-  img,
-  name,
-  position,
-  submit,
-}: {
-  id: any;
-  img: any;
-  name: any;
-  position: any;
-  submit: any;
-}) => {
-  return (
-    <SideBarItemBase
-      id={id}
-      name={name}
-      img={img}
-      position={position}
-      submit={submit}
-    />
-  );
+export const SideBarItemLeft = ({ ...props }: MenuGroupProps) => {
+  return <SideBarItemBase {...props} />;
 };

@@ -1,4 +1,4 @@
-import { ButtonNav } from "@/Components/Global/ButtonNav";
+import { ButtonNav } from "@/Components/ui/ButtonNav";
 
 const HomePage = () => {
   return (

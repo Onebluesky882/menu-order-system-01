@@ -1,0 +1,60 @@
+/* SideBarItemBase.module.css */
+
+.sidebar-item {
+  display: flex;
+  list-style-type: none;
+  padding: 60px 40px;
+  background-color: #f7e7bd;
+  margin-top: 10px;
+  position: relative;
+}
+
+.sidebar-item-left {
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  padding-right: 70px;
+  background-color: #f6ecd2;
+  list-style-type: none;
+  padding: 20px;
+  margin: 10px;
+  margin-left: 0px;
+}
+
+.sidebar-item-right {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 50px;
+  list-style-type: none;
+  background-color: #f6ecd2;
+  padding: 20px;
+  margin: 10px;
+  margin-right: 0px;
+}
+
+.sidebar-img {
+  position: absolute;
+  width: 50px;
+}
+
+.sidebar-img-left {
+  left: -30px;
+  top: -32px;
+}
+
+.sidebar-img-right {
+  right: -35px;
+  top: -42px;
+}
+
+.sidebar-text {
+  position: absolute;
+  margin-top: 5px;
+}
+
+.sidebar-text-left {
+  left: -30px;
+}
+
+.sidebar-text-right {
+  right: -30px;
+  margin-top: 8px;
+}

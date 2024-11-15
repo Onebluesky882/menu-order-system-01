@@ -3,6 +3,7 @@ import { useState } from "react";
 
 export const useCart = () => {
   const [orders, setOrders] = useState<CartOrder[]>([]);
+  const [category, setCategory] = useState("");
 
   const onAdd = ({ menuId }: Pick<CartOrder, "menuId">) => {
     const menuItem = orders.find((item) => item.menuId === menuId);
@@ -51,7 +52,22 @@ export const useCart = () => {
     setOrders([]);
     return;
   };
-  return { orders, setOrders, onAdd, onMinus, submitCart, resetOrder };
+
+  const submitMenubyCategory = (cat: string) => {
+    return setCategory(cat);
+  };
+
+  return {
+    orders,
+    setOrders,
+    onAdd,
+    onMinus,
+    submitCart,
+    resetOrder,
+    category,
+    setCategory,
+    submitMenubyCategory,
+  };
 };
 
 export const defaultCartProvider = {
@@ -61,4 +77,7 @@ export const defaultCartProvider = {
   onMinus: () => null,
   submitCart: () => [],
   resetOrder: () => null,
+  category: "",
+  setCategory: () => null,
+  submitMenubyCategory: () => null,
 };

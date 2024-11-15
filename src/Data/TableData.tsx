@@ -1,10 +1,3 @@
-export type MenuGroup = {
-  id: string;
-  name: string;
-  img: string;
-  position: string;
-};
-
 export const table = [
   {
     tableNo: "A1",

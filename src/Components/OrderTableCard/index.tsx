@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { TableStatusColor } from "./tableStyle";
-import css from "./orderTable.module.css";
+import css from "../style/orderTable.module.css";
 
 type OrderTableCardProps = {
   tableNo: string;

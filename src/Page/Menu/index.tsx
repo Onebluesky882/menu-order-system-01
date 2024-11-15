@@ -1,19 +1,14 @@
 import { CartOrderCard } from "@/Components/CartOrderCard";
-import { MenuCard } from "@/Components/menuCard/MenuCard";
 import { SidebarLeft, SidebarRight } from "@/Components/Sidebar";
 import { menu } from "../../Data/Menu";
 import { GlobalContext } from "@/Hooks/GlobalContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { MenuCard } from "@/Components/MenuCard";
 
 const Menu = () => {
   const { table } = useContext(GlobalContext).tableProvider;
-  const { orders } = useContext(GlobalContext).cartProvider;
-
-  const [category, setCategory] = useState<string>("");
-
-  const handleSubmit = (cat: string) => {
-    setCategory(cat);
-  };
+  const { category, orders, onAdd, onMinus } =
+    useContext(GlobalContext).cartProvider;
 
   const menuFilter = menu.filter(
     (item) => item.category === category.toLocaleLowerCase()
@@ -22,13 +17,18 @@ const Menu = () => {
   return (
     <div>
       <h2 style={{ textAlign: "center" }}> โต๊ะ {table.tableNo}</h2>
-      <p style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" }}>
         {orders.map((i) => (
-          <CartOrderCard order={i} />
+          <CartOrderCard
+            order={i}
+            onMinus={onAdd}
+            onAdd={onMinus}
+            key={i.menuId}
+          />
         ))}
-      </p>
-      <SidebarLeft submit={handleSubmit} />
-      <SidebarRight submit={handleSubmit} />
+      </div>
+      <SidebarLeft />
+      <SidebarRight />
       <div className="ProductCardContainer">
         {menuFilter.map((menu) => (
           <MenuCard
@@ -38,6 +38,8 @@ const Menu = () => {
             price={menu.price}
             id={menu.id}
             category={menu.category}
+            onAdd={onAdd}
+            onMinus={onMinus}
           />
         ))}
       </div>

@@ -1,13 +1,9 @@
 import { menuList } from "@/Data/MenuCategory";
 import { SideBarItemLeft } from "./Layout/SidebarItem/SideBarItemLeft";
 import { SideBarItemRight } from "./Layout/SidebarItem/SideBarItemRight";
-import { MenuProps } from "./Layout/SidebarItem/SideBarItemBase";
 
-export function SidebarLeft({ submit }: MenuProps) {
+export function SidebarLeft() {
   const leftMenuBar = menuList.filter((item) => item.position === "left");
-  const handleSubmit = (cat: string) => {
-    submit(cat);
-  };
   return (
     <div style={{ position: "fixed", top: "180px", left: "0px" }}>
       {leftMenuBar.map((menu) => (
@@ -15,19 +11,14 @@ export function SidebarLeft({ submit }: MenuProps) {
           key={menu.id}
           name={menu.name}
           img={menu.img}
-          id={menu.id}
-          position={menu.position}
-          submit={handleSubmit}
+          position={"left"}
         />
       ))}
     </div>
   );
 }
 
-export function SidebarRight({ submit }: MenuProps) {
-  const handleSubmit = (cat: string) => {
-    submit(cat);
-  };
+export function SidebarRight() {
   const rightMenuBar = menuList.filter((item) => item.position === "right");
   return (
     <div
@@ -45,9 +36,7 @@ export function SidebarRight({ submit }: MenuProps) {
           key={menu.id}
           name={menu.name}
           img={menu.img}
-          id={menu.id}
-          position={menu.position}
-          submit={handleSubmit}
+          position={"right"}
         />
       ))}
     </div>

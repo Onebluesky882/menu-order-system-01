@@ -1,19 +1,22 @@
-import { GlobalContext } from "@/Hooks/GlobalContext";
-import { useContext } from "react";
 import css from "./style/ButtonCard.module.css";
+import React from "react";
 
-const ButtonCartOrder = () => {
-  const { resetOrders, submitCart } = useContext(GlobalContext);
-
+const ButtonCartOrder = ({
+  resetOrders,
+  submitCart,
+}: {
+  resetOrders: React.Dispatch<React.SetStateAction<any>>;
+  submitCart: React.Dispatch<React.SetStateAction<any>>;
+}) => {
   return (
-    <div style={{ display: "flex", margin: "auto" }}>
+    <div className={css["container"]}>
       <div style={{}}>
-        <button className={css["button"]} onClick={resetOrders}>
+        <button className={css["button-reset"]} onClick={resetOrders}>
           reset
         </button>
       </div>
       <div>
-        <button className={css["button"]} onClick={submitCart}>
+        <button className={css["button-confirm"]} onClick={submitCart}>
           confirm
         </button>
       </div>

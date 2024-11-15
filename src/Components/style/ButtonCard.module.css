@@ -1,10 +1,24 @@
-.button {
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-confirm {
   padding: 15px 25px;
   color: #50895d;
-  border-style: none;
-  border: 0.5px solid #9fbafb;
   margin-top: 10px;
   border-radius: 0px 10px 10px 0px;
-  font-size: 25px;
+  font-size: 18px;
   font-weight: bold;
+  outline: none;
+}
+
+.button-reset {
+  padding: 15px 25px;
+  color: #d41434;
+  margin-top: 10px;
+  border-radius: 10px 0px 0px 10px;
+  font-size: 18px;
+  font-weight: bold;
+  outline: none;
 }
