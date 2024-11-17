@@ -4,7 +4,7 @@ import { Order } from "@/types/Order";
 export type TableOrderCardProps = {
   order: Order;
 };
-
+// todo css
 const TableOrderCard = ({ order }: TableOrderCardProps) => {
   const menuItem = getMenuItem(order.menuId);
   const amount = order.amount;

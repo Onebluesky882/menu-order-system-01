@@ -3,16 +3,23 @@
   padding: 0;
   user-select: none;
 }
+body {
+  min-height: 100vh;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
 .header {
   display: flex;
-  padding: 10px 84px;
+  padding: 10px 44px;
   justify-content: space-between;
   align-items: center;
   background-color: #f8eccf;
   margin-bottom: -5px;
   border-bottom: 5px;
   border-color: #edc2a8;
-  margin-bottom: 0px;
   border-style: solid;
 }
 .ProductCardContainer {
@@ -41,15 +48,12 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-ul {
-  list-style: none;
-}
-
 a {
   color: inherit;
   text-decoration: none;
 }
 
+/*mobile responsive */
 /*mobile responsive */
 @media screen and (max-width: 600px) {
   .footer-mobile {
@@ -98,15 +102,6 @@ a {
   display: grid;
   align-items: center;
   justify-content: center;
-}
-
-.div-container-nav {
-  width: 100%;
-  justify-content: center;
-  display: flex;
-  margin-top: 200px;
-  position: sticky;
-  bottom: 0px;
 }
 
 .div-section-nav {

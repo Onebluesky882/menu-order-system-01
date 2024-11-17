@@ -1,6 +1,6 @@
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { useContext } from "react";
-import css from "../../style/SideBarItemBase.module.css";
+import css from "./SideBarItemBase.module.css";
 export type MenuGroupProps = {
   name: string;
   img: string;

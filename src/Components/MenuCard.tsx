@@ -1,6 +1,6 @@
 import { MenuItem } from "@/types/MenuItem";
 import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
-import css from "./style/MenuCard.module.css";
+import css from "./MenuCard/MenuCard.module.css";
 import { useContext } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 

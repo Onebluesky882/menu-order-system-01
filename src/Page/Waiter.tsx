@@ -1,4 +1,4 @@
 const Waiter = () => {
-  return <div>Waiteer</div>;
+  return <div>Waiter</div>;
 };
 export default Waiter;

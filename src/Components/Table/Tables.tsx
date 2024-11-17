@@ -1,7 +1,7 @@
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { TableStatusColor } from "../OrderTableCard/tableStyle";
+import { TableStatusColor } from "../OrderTableCard";
 
 type TableProps = {
   tableNo: string;

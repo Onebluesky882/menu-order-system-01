@@ -24,11 +24,7 @@ export function HomeIcon() {
 }
 
 export function Logo() {
-  return (
-    <div>
-      <img src={"/mmd_logo_1.png"} alt="logoname" style={{ height: 100 }} />
-    </div>
-  );
+  return <img src={"/mmd_logo_1.png"} alt="logoname" className="logo" />;
 }
 
 export function OrderList() {

@@ -1,4 +1,4 @@
-import css from "./style.module.css";
+import css from "./Table.module.css";
 
 type ConfirmPopupProps = {
   message: string;
