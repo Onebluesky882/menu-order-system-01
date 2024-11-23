@@ -1,14 +1,17 @@
 import { CartOrder } from "@/types/Order";
 import { useState } from "react";
-
+import useSoundAction from "./useSoundAction";
 export const useCart = () => {
   const [orders, setOrders] = useState<CartOrder[]>([]);
   const [category, setCategory] = useState("");
+
+  const { popSound, lipSound } = useSoundAction();
 
   const onAdd = ({ menuId }: Pick<CartOrder, "menuId">) => {
     const menuItem = orders.find((item) => item.menuId === menuId);
     const amount = menuItem?.amount ?? 0;
 
+    lipSound();
     if (amount > 9) {
       return;
     }
@@ -33,6 +36,7 @@ export const useCart = () => {
   const onMinus = ({ menuId }: Pick<CartOrder, "menuId">) => {
     const order = [...orders];
 
+    popSound();
     const updatedOrders = order
       .map((item) =>
         item.menuId === menuId ? { ...item, amount: item.amount - 1 } : item

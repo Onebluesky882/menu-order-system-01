@@ -1,103 +1,109 @@
-import { GlobalContext } from "@/Hooks/GlobalContext";
+import table from "@/Data/TableData";
+import css from "./Table.module.css";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { TableStatusColor } from "../OrderTableCard";
+import { GlobalContext } from "@/Hooks/GlobalContext";
+import { ConfirmTable } from "./ConfirmTable";
 
 type TableProps = {
   tableNo: string;
   status: string;
 };
 
-type TableCardProps = {
-  position: string;
-};
+const leftSide = table.filter((table) => table.position === "left");
+const rightSide = table.filter((table) => table.position === "right");
 
-// todo should same with order table
+export const TablesMap = ({
+  tableNo,
+  status,
+  clientName = "",
+}: TableProps & {
+  clientName: string;
+}) => {
+  const { setShowConfirmTable, showConfirmTable, setConfirmSelectedTableNo } =
+    useContext(GlobalContext);
 
-export const TablesMap = ({ tableNo, status }: TableProps) => {
-  const navigate = useNavigate();
-  const { setConfirmSelectedTableNo } = useContext(GlobalContext);
-
-  const handleSubmit = () => {
-    setConfirmSelectedTableNo(tableNo);
-    navigate(`/confirm-table-no`);
-    // navigate(`/${tableNo}`);
+  const confirm = () => {
+    if (status === "AVAILABLE") {
+      setConfirmSelectedTableNo(tableNo);
+      setShowConfirmTable(true);
+    } else {
+      alert("not available");
+    }
   };
+
   return (
     <div>
-      <button
-        //Link
-        style={{
-          background: "none",
-          textDecoration: "none",
-          color: "black",
-          borderStyle: "none",
-          backgroundColor: "Background",
-        }}
-        onClick={handleSubmit}
-      >
-        {" "}
+      <div className={css["table-style"]} onClick={confirm}>
         <div
+          className={css["table-frame-rounded"]}
           style={{
             ...TableStatusColor(status),
-            padding: "25px",
-            borderRadius: "999px",
-            margin: "10px",
           }}
         >
-          <p
-            style={{
-              fontSize: "18px",
-              fontWeight: "bold",
-              textAlign: "center",
-            }}
-          >
-            {tableNo}
-          </p>
+          <p> {clientName !== "" && `${clientName}`}</p>
+          <h3 className={css["table-style"]}>{tableNo}</h3>
           <p style={{ textAlign: "center", fontSize: "14px" }}>{status}</p>
         </div>
-      </button>
+      </div>
+      {showConfirmTable && <ConfirmTable />}
     </div>
   );
 };
 
 export const TableContainer = ({ children }: React.PropsWithChildren) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        margin: "auto",
-        padding: "20px",
-        justifyContent: "center",
-        background: "#F2F2F2",
-        flexDirection: "column",
-      }}
-    >
-      <h1 style={{ textAlign: "center" }}> แผนผังที่นั่ง</h1>
-      <div
-        style={{
-          display: "flex",
-          background: "white",
-          borderRadius: "10px",
-          margin: "auto",
-        }}
-      >
-        {children}
-      </div>
+    <div className={css["table-container"]}>
+      <div className={css["table-container-section"]}>{children}</div>
     </div>
   );
 };
 
 export const TableCard = ({
-  children,
-  position,
-}: React.PropsWithChildren<TableCardProps>) => {
+  status,
+  clientName,
+}: {
+  status: string;
+  clientName: string;
+}) => {
   return (
-    <div style={{ padding: "0px" }}>
-      <p style={{ textAlign: "center", margin: "-20px", marginTop: "20px" }}>
-        {position}
-      </p>
-      <div style={{ padding: "20px" }}>{children}</div>
-    </div>
+    <TableContainer>
+      <div>
+        {rightSide.map((t) => (
+          <TablesMap
+            key={t.tableNo}
+            tableNo={t.tableNo}
+            status={status}
+            clientName={clientName}
+          />
+        ))}
+      </div>
+      <div>
+        {leftSide.map((t) => (
+          <TablesMap
+            key={t.tableNo}
+            tableNo={t.tableNo}
+            status={status}
+            clientName={clientName}
+          />
+        ))}
+      </div>
+    </TableContainer>
   );
+};
+
+export const TableStatusColor = (status: string): React.CSSProperties => {
+  switch (status) {
+    case "AVAILABLE":
+      return { backgroundColor: "#B2D3AC" };
+    case "OCCUPIED":
+      return { backgroundColor: "#E98874" };
+    case "CLEANING":
+      return { backgroundColor: "#ADB2BF" };
+    case "RESERVED":
+      return { backgroundColor: "#F7CC43" };
+    default:
+      return {
+        backgroundColor: "white",
+      };
+  }
 };

@@ -8,6 +8,7 @@ const Footer = () => {
   return (
     <footer className={css["footer-style"]}>
       <div className={css["section"]}>
+        <Promotions />
         <Tables />
         <Menu />
         <Waiter />
@@ -64,6 +65,18 @@ const CheckOrder = () => {
         </li>
       </ul>
       Check Order
+    </Link>
+  );
+};
+const Promotions = () => {
+  return (
+    <Link to={"/promotions"} className={css["link"]}>
+      <ul className={css["ul"]}>
+        <li>
+          <PiCallBellFill />
+        </li>
+      </ul>
+      Promotions
     </Link>
   );
 };

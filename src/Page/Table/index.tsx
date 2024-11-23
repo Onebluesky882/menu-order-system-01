@@ -3,24 +3,16 @@ import {
   TableContainer,
   TablesMap,
 } from "@/Components/Table/Tables";
-import { table } from "@/Data/TableData";
+import { GlobalContext } from "@/Hooks/GlobalContext";
+import { useContext } from "react";
 
 const Table = () => {
-  const tablesLeftSide = table.filter((t) => t.position === "left");
-  const tablesRightSide = table.filter((t) => t.position === "right");
+  const { table } = useContext(GlobalContext).tableProvider;
+  console.log("table", table);
   return (
     <div>
       <TableContainer>
-        <TableCard position="ซ้าย">
-          {tablesRightSide.map((p) => (
-            <TablesMap key={p.tableNo} tableNo={p.tableNo} status={p.status} />
-          ))}
-        </TableCard>
-        <TableCard position="ขวา">
-          {tablesLeftSide.map((p) => (
-            <TablesMap key={p.tableNo} tableNo={p.tableNo} status={p.status} />
-          ))}
-        </TableCard>
+        <TableCard status={table.status} clientName={""} />
       </TableContainer>
     </div>
   );

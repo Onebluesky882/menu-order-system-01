@@ -11,6 +11,8 @@ type GlobalContextType = {
   setConfirmSelectedTableNo: React.Dispatch<
     React.SetStateAction<string | null>
   >;
+  showConfirmTable: boolean | null;
+  setShowConfirmTable: React.Dispatch<React.SetStateAction<boolean | null>>;
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
@@ -20,6 +22,8 @@ export const GlobalContext = createContext<GlobalContextType>({
   resetOrders: () => null,
   confirmSelectedTableNo: null,
   setConfirmSelectedTableNo: () => null,
+  setShowConfirmTable: () => null,
+  showConfirmTable: null,
 });
 
 export const GlobalProvider = ({ children }: React.PropsWithChildren) => {
@@ -29,6 +33,10 @@ export const GlobalProvider = ({ children }: React.PropsWithChildren) => {
   const [confirmSelectedTableNo, setConfirmSelectedTableNo] = useState<
     string | null
   >(null);
+
+  const [showConfirmTable, setShowConfirmTable] = useState<boolean | null>(
+    null
+  );
 
   const submitCart = () => {
     const submitOrders = cartProvider.submitCart();
@@ -48,6 +56,8 @@ export const GlobalProvider = ({ children }: React.PropsWithChildren) => {
         resetOrders,
         confirmSelectedTableNo,
         setConfirmSelectedTableNo,
+        setShowConfirmTable,
+        showConfirmTable,
       }}
     >
       {children}

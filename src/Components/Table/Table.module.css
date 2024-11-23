@@ -8,8 +8,41 @@
   border: 1px solid rgba(154, 154, 154, 0.35);
 }
 
-/* styles.module.css */
+.table-container {
+  display: flex;
+  margin: auto;
+  padding: 20px;
+  justify-content: center;
+  background: #f2f2f2;
+  flex-direction: column;
+}
+.table-container-section {
+  display: flex;
+  background: white;
+  border-radius: 10px;
+  margin: auto;
+}
 
+.table-style {
+  text-decoration: none;
+  color: black;
+  border-style: none;
+  background-color: var(--background, transparent);
+  display: block;
+}
+
+.table-style p {
+  display: block;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 12px;
+}
+.table-frame-rounded {
+  padding: 25px;
+  border-radius: 999px;
+  margin: 10px;
+  text-align: center;
+}
 .overlay {
   position: fixed;
   top: 0;
@@ -20,6 +53,12 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  backdrop-filter: blur(1px); /* Apply the blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Optional border */
+  border-radius: 10px; /* Optional rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
 }
 
 .popup {

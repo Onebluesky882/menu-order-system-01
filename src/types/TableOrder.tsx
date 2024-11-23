@@ -5,4 +5,4 @@ export type Table = {
   position?: "left" | "right";
 };
 
-export type TableOrder = Table & { name?: string };
+export type NameTable = Table & { name?: string };

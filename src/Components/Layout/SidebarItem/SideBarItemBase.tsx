@@ -1,6 +1,7 @@
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { useContext } from "react";
 import css from "./SideBarItemBase.module.css";
+import useSoundAction from "@/Hooks/useSoundAction";
 export type MenuGroupProps = {
   name: string;
   img: string;
@@ -9,6 +10,11 @@ export type MenuGroupProps = {
 
 export const SideBarItemBase = ({ name, img, position }: MenuGroupProps) => {
   const { setCategory } = useContext(GlobalContext).cartProvider;
+  const { lipSound } = useSoundAction();
+  const handleSubmit = () => {
+    lipSound();
+    setCategory(name);
+  };
 
   return (
     <div style={{ display: "flex" }}>
@@ -18,7 +24,7 @@ export const SideBarItemBase = ({ name, img, position }: MenuGroupProps) => {
             ? css["sidebar-item-left"]
             : css["sidebar-item-right"]
         }`}
-        onClick={() => setCategory(name)}
+        onClick={handleSubmit}
       >
         <div
           style={{

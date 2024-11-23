@@ -1,5 +1,5 @@
 import { CartOrder, Order, OrderTable } from "@/types/Order";
-import { TableOrder } from "@/types/TableOrder";
+import { Table } from "@/types/TableOrder";
 import {
   transformKeysToCamelCase,
   transformKeysToSnakeCase,
@@ -7,7 +7,7 @@ import {
 import supabase from "@/utils/supabase";
 import { useEffect, useState } from "react";
 
-const defaultTable: TableOrder = {
+const defaultTable: Table = {
   status: "AVAILABLE" as const,
   tableNo: "0",
   seat: 3,
@@ -15,7 +15,7 @@ const defaultTable: TableOrder = {
 
 export const useTable = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [table, setTable] = useState<TableOrder>(defaultTable);
+  const [table, setTable] = useState<Table>(defaultTable);
 
   useEffect(() => {
     loadOrder();
@@ -52,7 +52,7 @@ export const useTable = () => {
 
     if (data) {
       const camelData = data.map((i) => transformKeysToCamelCase(i));
-      console.log("loadOrder :", table.tableNo);
+
       setOrders(camelData);
     }
   };
@@ -75,12 +75,19 @@ export const useTable = () => {
     setOrders([...orders, ...prepareOrder]);
   };
 
-  const submitTable = async (tableNo: TableOrder["tableNo"]) => {
-    const newTable = { ...defaultTable, tableNo };
+  const submitTable = async (No: Table["tableNo"]) => {
+    const newTable = { ...defaultTable, tableNo: No, status: "OCCUPIED" };
 
-    await supabase.from("tables").update([transformKeysToSnakeCase(newTable)]);
+    const { data, error } = await supabase
+      .from("tables")
+      .update([transformKeysToSnakeCase(newTable)])
+      .eq("table_no", table.tableNo);
 
-    setTable(newTable);
+    if (error) {
+      console.error("Error updating table:", error);
+      return;
+    }
+    setTable(newTable as Table);
 
     await loadTable();
   };
