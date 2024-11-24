@@ -10,15 +10,12 @@
 
 .table-container {
   display: flex;
+  justify-content: space-between;
   margin: auto;
   padding: 20px;
-  justify-content: center;
-  background: #f2f2f2;
-  flex-direction: column;
 }
 .table-container-section {
-  display: flex;
-  background: white;
+  background-color: rgb(100, 135, 164);
   border-radius: 10px;
   margin: auto;
 }
@@ -38,8 +35,8 @@
   margin-top: 12px;
 }
 .table-frame-rounded {
-  padding: 25px;
-  border-radius: 999px;
+  padding: 25px 50px 25px 50px;
+  border-radius: 100px;
   margin: 10px;
   text-align: center;
 }
@@ -53,19 +50,15 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
-  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
-  backdrop-filter: blur(1px); /* Apply the blur effect */
-  -webkit-backdrop-filter: blur(10px); /* For Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Optional border */
-  border-radius: 10px; /* Optional rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  background-color: rgba(249, 249, 249, 0.067);
 }
 
 .popup {
   background-color: white;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 10px rgba(184, 184, 184, 0.2);
   text-align: center;
 }
 
@@ -73,5 +66,14 @@
   margin: 10px;
   padding: 10px 20px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 25px;
+  border: none;
+  font-weight: bold;
+}
+.button:focus {
+  background-color: #fffdd0;
+}
+
+.right-section {
+  border: 1px solid red;
 }

@@ -16,6 +16,7 @@ const defaultTable: Table = {
 export const useTable = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [table, setTable] = useState<Table>(defaultTable);
+  const [allTable, setAllTable] = useState<Table[]>([]);
 
   useEffect(() => {
     loadOrder();
@@ -31,7 +32,7 @@ export const useTable = () => {
           table: "orders",
           filter: `table_no=eq.${table.tableNo}`,
         },
-        (payload: any) => {
+        (payload: unknown) => {
           console.log("payload", payload);
           loadOrder();
         }
@@ -75,13 +76,15 @@ export const useTable = () => {
     setOrders([...orders, ...prepareOrder]);
   };
 
-  const submitTable = async (No: Table["tableNo"]) => {
+  const changeTableStatus = async (No: Table["tableNo"]) => {
     const newTable = { ...defaultTable, tableNo: No, status: "OCCUPIED" };
-
     const { data, error } = await supabase
       .from("tables")
-      .update([transformKeysToSnakeCase(newTable)])
-      .eq("table_no", table.tableNo);
+      .update(transformKeysToSnakeCase(newTable))
+      .eq("table_no", No);
+    if (data) {
+      console.log("newTable :", newTable);
+    }
 
     if (error) {
       console.error("Error updating table:", error);
@@ -113,7 +116,7 @@ export const useTable = () => {
     submitCart,
     table,
     setTable,
-    submitTable,
+    changeTableStatus,
   };
 };
 
@@ -123,5 +126,5 @@ export const defaultTableProvider = {
   setOrders: () => null,
   submitCart: () => Promise.resolve(),
   setTable: () => null,
-  submitTable: () => Promise.resolve(),
+  changeTableStatus: () => Promise.resolve(),
 };

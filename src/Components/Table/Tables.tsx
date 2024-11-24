@@ -3,21 +3,21 @@ import css from "./Table.module.css";
 import { useContext } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { ConfirmTable } from "./ConfirmTable";
+import Table from "../../Page/Table/index";
 
 type TableProps = {
   tableNo: string;
   status: string;
 };
 
-const leftSide = table.filter((table) => table.position === "left");
-const rightSide = table.filter((table) => table.position === "right");
-
 export const TablesMap = ({
   tableNo,
   status,
   clientName = "",
+  position,
 }: TableProps & {
   clientName: string;
+  position: string;
 }) => {
   const { setShowConfirmTable, showConfirmTable, setConfirmSelectedTableNo } =
     useContext(GlobalContext);
@@ -33,16 +33,22 @@ export const TablesMap = ({
 
   return (
     <div>
-      <div className={css["table-style"]} onClick={confirm}>
-        <div
-          className={css["table-frame-rounded"]}
-          style={{
-            ...TableStatusColor(status),
-          }}
-        >
-          <p> {clientName !== "" && `${clientName}`}</p>
-          <h3 className={css["table-style"]}>{tableNo}</h3>
-          <p style={{ textAlign: "center", fontSize: "14px" }}>{status}</p>
+      <div
+        className={`${
+          position === "right" ? css["right-section"] : css["left-section"]
+        }`}
+      >
+        <div className="table-box" onClick={confirm}>
+          <div
+            className={css["table-frame-rounded"]}
+            style={{
+              ...TableStatusColor(status),
+            }}
+          >
+            <p> {clientName !== "" && `${clientName}`}</p>
+            <h3 className={css["table-style"]}>{tableNo}</h3>
+            <p style={{ textAlign: "center", fontSize: "14px" }}>{status}</p>
+          </div>
         </div>
       </div>
       {showConfirmTable && <ConfirmTable />}
@@ -66,28 +72,16 @@ export const TableCard = ({
   clientName: string;
 }) => {
   return (
-    <TableContainer>
-      <div>
-        {rightSide.map((t) => (
-          <TablesMap
-            key={t.tableNo}
-            tableNo={t.tableNo}
-            status={status}
-            clientName={clientName}
-          />
-        ))}
-      </div>
-      <div>
-        {leftSide.map((t) => (
-          <TablesMap
-            key={t.tableNo}
-            tableNo={t.tableNo}
-            status={status}
-            clientName={clientName}
-          />
-        ))}
-      </div>
-    </TableContainer>
+    <>
+      {table.map((table) => (
+        <TablesMap
+          status={status}
+          clientName={clientName}
+          tableNo={table.tableNo}
+          position={table.position}
+        />
+      ))}
+    </>
   );
 };
 

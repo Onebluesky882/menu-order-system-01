@@ -9,10 +9,10 @@ export const ConfirmTable = () => {
   const { setShowConfirmTable, confirmSelectedTableNo } =
     useContext(GlobalContext);
 
-  const { submitTable } = useContext(GlobalContext).tableProvider;
+  const { changeTableStatus } = useContext(GlobalContext).tableProvider;
 
   const confirmSubmit = async () => {
-    await submitTable(confirmSelectedTableNo as Table["tableNo"]);
+    await changeTableStatus(confirmSelectedTableNo as Table["tableNo"]);
     navigator("/menu");
   };
 

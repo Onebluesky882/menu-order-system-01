@@ -1,6 +1,6 @@
 import Menu from "@/Page/Menu";
 
-const TableNoCard = ({ tableNo }: { tableNo: string }) => {
+const TableNoCard = () => {
   return (
     <div>
       <div

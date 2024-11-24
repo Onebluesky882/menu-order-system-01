@@ -2,10 +2,10 @@ import { GlobalContext } from "@/Hooks/GlobalContext";
 import { useContext } from "react";
 import { FaClipboardList, FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
+import css from "./header.module.css";
 export default function Header() {
   return (
-    <header className="header">
+    <header className={css["header"]}>
       <HomeIcon />
       <Logo />
       <OrderList />
@@ -24,7 +24,7 @@ export function HomeIcon() {
 }
 
 export function Logo() {
-  return <img src={"/mmd_logo_1.png"} alt="logoname" className="logo" />;
+  return <img src={"/mmd_logo_1.png"} alt="logoname" className={css["logo"]} />;
 }
 
 export function OrderList() {

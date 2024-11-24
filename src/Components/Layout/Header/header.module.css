@@ -1,0 +1,16 @@
+.logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+.header {
+  display: flex;
+  padding: 10px 44px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8eccf;
+  margin-bottom: -5px;
+  border-bottom: 5px;
+  border-color: #edc2a8;
+  border-style: solid;
+}
