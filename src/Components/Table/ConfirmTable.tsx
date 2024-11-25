@@ -6,18 +6,20 @@ import { Table } from "@/types/TableOrder";
 
 export const ConfirmTable = () => {
   const navigator = useNavigate();
-  const { setShowConfirmTable, confirmSelectedTableNo } =
+  const { showConfirmTable, setShowConfirmTable, confirmSelectedTableNo } =
     useContext(GlobalContext);
 
   const { changeTableStatus } = useContext(GlobalContext).tableProvider;
 
   const confirmSubmit = async () => {
     await changeTableStatus(confirmSelectedTableNo as Table["tableNo"]);
+    console.log("confirmSelectedTableNo", confirmSelectedTableNo);
     navigator("/menu");
   };
 
   const cancelSubmit = () => {
     setShowConfirmTable(false);
+    console.log("showConfirmTable :", showConfirmTable);
   };
 
   return (

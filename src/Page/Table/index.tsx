@@ -8,11 +8,12 @@ const Table = () => {
   console.log("table  :", table.status);
   console.log("table  :", table.tableNo);
   return (
-    <div>
-      <TableContainer>
-        <TableCard status={table.status} clientName={"เจน"} />
-      </TableContainer>
-    </div>
+    <>
+      <h1 style={{ textAlign: "center", margin: "10px 0px -10px 0px" }}>
+        แผนที่โต๊ะอาหาร
+      </h1>
+      <TableCard status={table.status} clientName={""} />
+    </>
   );
 };
 

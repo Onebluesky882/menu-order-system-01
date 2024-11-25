@@ -10,14 +10,25 @@
 
 .table-container {
   display: flex;
-  justify-content: space-between;
-  margin: auto;
+  margin: 0 auto;
   padding: 20px;
 }
-.table-container-section {
-  background-color: rgb(100, 135, 164);
-  border-radius: 10px;
+.table-section {
+  background-color: palevioletred;
+  display: flex;
+  position: relative;
+  margin: 0 auto;
+}
+.table-container-section-right {
+  display: flex;
+  flex-direction: column;
+}
+.table-container-section-left {
+  display: flex;
+  flex-direction: column;
+
   margin: auto;
+  margin-top: 0px;
 }
 
 .table-style {
@@ -72,8 +83,4 @@
 }
 .button:focus {
   background-color: #fffdd0;
-}
-
-.right-section {
-  border: 1px solid red;
 }
