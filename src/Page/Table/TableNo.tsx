@@ -9,7 +9,7 @@ const TableNo = () => {
   let navigate = useNavigate();
   return (
     <div>
-      <TableNoCard tableNo={tableNo ?? ""} />
+      <TableNoCard />
     </div>
   );
 };

@@ -1,49 +1,23 @@
 import table from "@/Data/TableData";
 import css from "./Table.module.css";
-import { useContext } from "react";
-import { GlobalContext } from "@/Hooks/GlobalContext";
-import { ConfirmTable } from "./ConfirmTable";
 
-type TableProps = {
-  tableNo: string;
-  status: string;
-};
-
-export const TablesMap = ({
-  tableNo,
-  status,
-  clientName = "",
-  position,
-}: TableProps & {
-  clientName: string;
-  position: string;
-}) => {
-  const { setShowConfirmTable, showConfirmTable, setConfirmSelectedTableNo } =
-    useContext(GlobalContext);
-
-  const confirm = () => {
-    if (status === "AVAILABLE") {
-      setConfirmSelectedTableNo(tableNo);
-      setShowConfirmTable(true);
-    } else {
-      alert("not available");
-    }
-  };
-
+export const TablesMap = ({}: {}) => {
+  const tableRightSide = table.filter((t) => t.tableNo.startsWith("A"));
+  const tableLeftSide = table.filter((t) => t.tableNo.startsWith("B"));
   return (
-    <div onClick={confirm}>
-      <div
-        className={css["table-frame-rounded"]}
-        style={{
-          ...TableStatusColor(status),
-        }}
-      >
-        <p> {clientName !== "" && `${clientName}`}</p>
-        <h3 className={css["table-style"]}>{tableNo}</h3>
-        <p style={{ textAlign: "center", fontSize: "14px" }}>{status}</p>
+    <TableContainer>
+      <div className={css["table-container-section-left"]}>
+        {tableLeftSide.map((t) => (
+          <TableCard key={t.tableNo} tableNo={""} />
+        ))}
       </div>
-      {showConfirmTable && <ConfirmTable />}
-    </div>
+
+      <div className={css["table-container-section-right"]}>
+        {tableRightSide.map((t) => {
+          return <TableCard key={t.tableNo} tableNo={t.tableNo} />;
+        })}
+      </div>
+    </TableContainer>
   );
 };
 
@@ -55,41 +29,16 @@ export const TableContainer = ({ children }: React.PropsWithChildren) => {
   );
 };
 
-export const TableCard = ({
-  status,
-  clientName,
-}: {
-  status: string;
-  clientName: string;
-}) => {
-  const tableRightSide = table.filter((t) => t.tableNo.startsWith("A"));
-  const tableLeftSide = table.filter((t) => t.tableNo.startsWith("B"));
+export const TableCard = ({ tableNo }: { tableNo: string }) => {
   return (
-    <TableContainer>
-      <div className={css["table-container-section-left"]}>
-        {tableLeftSide.map((t) => (
-          <TablesMap
-            key={t.tableNo}
-            status={status}
-            clientName={clientName}
-            position={t.position}
-            tableNo={t.tableNo}
-          />
-        ))}
-      </div>
-
-      <div className={css["table-container-section-right"]}>
-        {tableRightSide.map((t) => (
-          <TablesMap
-            key={t.tableNo}
-            status={status}
-            clientName={clientName}
-            position={t.position}
-            tableNo={t.tableNo}
-          />
-        ))}
-      </div>
-    </TableContainer>
+    <div
+      className={css["table-frame-rounded"]}
+      style={{
+        ...TableStatusColor(status),
+      }}
+    >
+      <h3>{tableNo}</h3>
+    </div>
   );
 };
 
