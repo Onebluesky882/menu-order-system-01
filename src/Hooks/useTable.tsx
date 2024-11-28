@@ -16,11 +16,11 @@ const defaultTable: Table = {
 export const useTable = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [table, setTable] = useState<Table>(defaultTable);
-  const [allTable, setAllTable] = useState<Table[]>([]);
+  const [allTables, setAllTables] = useState<Table[]>([]);
 
   useEffect(() => {
     loadOrder();
-
+    loadTable();
     // passive interaction, trigger based on changes of the order relate to this table
     const channels = supabase
       .channel("subscribe-order-table-channel")
@@ -96,7 +96,12 @@ export const useTable = () => {
   };
 
   const loadTable = async () => {
-    await supabase.from("tables").select();
+    const { data } = await supabase.from("tables").select();
+
+    const transform =
+      data?.map((table) => transformKeysToCamelCase(table)) ?? [];
+
+    setAllTables(transform);
   };
 
   //test createTable
@@ -117,6 +122,7 @@ export const useTable = () => {
     table,
     setTable,
     changeTableStatus,
+    allTables,
   };
 };
 
@@ -127,4 +133,5 @@ export const defaultTableProvider = {
   submitCart: () => Promise.resolve(),
   setTable: () => null,
   changeTableStatus: () => Promise.resolve(),
+  allTables: [],
 };

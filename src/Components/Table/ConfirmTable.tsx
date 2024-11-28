@@ -11,7 +11,10 @@ export const ConfirmTable = () => {
   const { changeTableStatus } = useContext(GlobalContext).tableProvider;
 
   const confirmSubmit = async () => {
+    console.log("ConfirmTable - Confirming table:", confirmSelectedTableNo);
+    if (!confirmSelectedTableNo) return;
     await changeTableStatus(confirmSelectedTableNo as Table["tableNo"]);
+    setConfirmTable(false);
     navigator("/menu");
   };
 

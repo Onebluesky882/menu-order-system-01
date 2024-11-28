@@ -1,22 +1,57 @@
-import table from "@/Data/TableData";
+import { table as tableData } from "@/Data/TableData";
 import css from "./Table.module.css";
+import { ConfirmTable } from "./ConfirmTable";
+import { useContext } from "react";
+import { GlobalContext } from "@/Hooks/GlobalContext";
+import table from "../../Data/TableData";
 
-export const TablesMap = ({}: {}) => {
-  const tableRightSide = table.filter((t) => t.tableNo.startsWith("A"));
-  const tableLeftSide = table.filter((t) => t.tableNo.startsWith("B"));
+type TableMapProps = {
+  confirmTable: boolean;
+  setConfirmTable: () => void;
+  setConfirmSelectedTableNo: (tableNo: string) => void;
+  status: string;
+  nickname?: string;
+};
+
+export const TablesMap = ({
+  confirmTable,
+  setConfirmTable,
+  setConfirmSelectedTableNo,
+  status,
+}: TableMapProps) => {
+  const tableRightSide = tableData.filter((t) => t.tableNo.startsWith("A"));
+  const tableLeftSide = tableData.filter((t) => t.tableNo.startsWith("B"));
+
   return (
     <TableContainer>
       <div className={css["table-container-section-left"]}>
         {tableLeftSide.map((t) => (
-          <TableCard key={t.tableNo} tableNo={""} />
+          <TableCard
+            key={t.tableNo}
+            tableNo={t.tableNo}
+            setConfirmSelectedTableNo={(tableNo) =>
+              setConfirmSelectedTableNo(tableNo)
+            }
+            setConfirmTable={setConfirmTable}
+          />
         ))}
       </div>
 
       <div className={css["table-container-section-right"]}>
         {tableRightSide.map((t) => {
-          return <TableCard key={t.tableNo} tableNo={t.tableNo} />;
+          return (
+            <TableCard
+              key={t.tableNo}
+              tableNo={t.tableNo}
+              setConfirmSelectedTableNo={(tableNo) =>
+                setConfirmSelectedTableNo(tableNo)
+              }
+              setConfirmTable={setConfirmTable}
+            />
+          );
         })}
       </div>
+      {confirmTable && <ConfirmTable />}
     </TableContainer>
   );
 };
@@ -29,14 +64,36 @@ export const TableContainer = ({ children }: React.PropsWithChildren) => {
   );
 };
 
-export const TableCard = ({ tableNo }: { tableNo: string }) => {
+export const TableCard = ({
+  tableNo,
+
+  setConfirmSelectedTableNo,
+  setConfirmTable,
+}: {
+  tableNo: string;
+
+  setConfirmSelectedTableNo: (tableNo: string) => void;
+  setConfirmTable: (popup: boolean) => void;
+}) => {
+  const handleSubmit = () => {
+    setConfirmSelectedTableNo(tableNo);
+    setConfirmTable(true);
+  };
+
+  const { allTables } = useContext(GlobalContext).tableProvider;
+  const statusTable = allTables.find((t) =>
+    allTables.some((table) => table.tableNo === t.tableNo)
+  );
+
   return (
     <div
       className={css["table-frame-rounded"]}
       style={{
         ...TableStatusColor(status),
       }}
+      onClick={handleSubmit}
     >
+      <p>{`status : ${statusTable?.status} `}</p>
       <h3>{tableNo}</h3>
     </div>
   );
