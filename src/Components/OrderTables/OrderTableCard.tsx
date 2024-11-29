@@ -4,9 +4,6 @@ import { useContext } from "react";
 const OrderTableCard = () => {
   const { orders } = useContext(GlobalContext).tableProvider;
 
-  const a = orderTable.map((item) => item.id);
-  console.log("ordersTable:", orderTable);
-
   return (
     <div
       style={{
