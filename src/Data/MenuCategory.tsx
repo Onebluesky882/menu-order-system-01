@@ -7,7 +7,7 @@ export type MenuGroup = {
   position: string;
 };
 
-export const menuList: MenuGroup[] = [
+export const menuGroup: MenuGroup[] = [
   {
     id: "be8a7141-be3f-41b7-b5ee-171ffe83ec2d",
     name: "Pork",
@@ -59,5 +59,5 @@ export const menuList: MenuGroup[] = [
 ];
 
 export const getMenuCategory = (category: string) => {
-  return menuList.find((id) => id.name === category) ?? ({} as MenuGroup);
+  return menuGroup.find((id) => id.name === category) ?? ({} as MenuGroup);
 };

@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 
-const TableOrder = () => {
+const OrderTable = () => {
   const { tableNo } = useParams();
+
   return (
     <div>
-      <h1>{tableNo}</h1>
+      <h1>{tableNo}</h1> <div>hi</div>
     </div>
   );
 };
-export default TableOrder;
+export default OrderTable;

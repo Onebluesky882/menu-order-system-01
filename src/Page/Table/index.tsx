@@ -17,9 +17,7 @@ const Table = () => {
           setConfirmSelectedTableNo(tableNo)
         }
         setConfirmTable={() => setConfirmTable(true)}
-        status={"AVAILABLE"}
       />
-      <button onClick={() => {}}>click</button>
     </>
   );
 };

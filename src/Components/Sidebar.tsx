@@ -1,9 +1,9 @@
-import { menuList } from "@/Data/MenuCategory";
+import { menuGroup } from "@/Data/MenuCategory";
 import { SideBarItemLeft } from "./Layout/SidebarItem/SideBarItemLeft";
 import { SideBarItemRight } from "./Layout/SidebarItem/SideBarItemRight";
 
 export function SidebarLeft() {
-  const leftMenuBar = menuList.filter((item) => item.position === "left");
+  const leftMenuBar = menuGroup.filter((item) => item.position === "left");
   return (
     <div style={{ position: "fixed", top: "180px", left: "0px" }}>
       {leftMenuBar.map((menu) => (
@@ -19,7 +19,7 @@ export function SidebarLeft() {
 }
 
 export function SidebarRight() {
-  const rightMenuBar = menuList.filter((item) => item.position === "right");
+  const rightMenuBar = menuGroup.filter((item) => item.position === "right");
   return (
     <div
       style={{

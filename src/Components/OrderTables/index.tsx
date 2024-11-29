@@ -1,22 +1,17 @@
 import { table as tableData } from "@/Data/TableData";
-import css from "./Table.module.css";
-import { ConfirmTable } from "./ConfirmTable";
+import css from "./styles.module.css";
 import { useContext } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
-type TableMapProps = {
+type OrderTableProps = {
   confirmTable: boolean;
   setConfirmTable: () => void;
   setConfirmSelectedTableNo: (tableNo: string) => void;
   client?: string;
 };
 
-export const TablesMap = ({
-  confirmTable,
-  setConfirmTable,
-  setConfirmSelectedTableNo,
-  client,
-}: TableMapProps) => {
+export const OrderTables = ({ client }: OrderTableProps) => {
   const tableRightSide = tableData.filter((t) => t.tableNo.startsWith("A"));
   const tableLeftSide = tableData.filter((t) => t.tableNo.startsWith("B"));
 
@@ -30,15 +25,11 @@ export const TablesMap = ({
             (table) => table.tableNo === t.tableNo
           )?.status;
           return (
-            <TableCard
+            <OrderTableCard
               key={t.tableNo}
-              tableNo={t.tableNo}
-              setConfirmSelectedTableNo={(tableNo) =>
-                setConfirmSelectedTableNo(tableNo)
-              }
-              setConfirmTable={setConfirmTable}
               status={tableStatus as unknown as string}
               client={client || ""}
+              tableNo={t.tableNo}
             />
           );
         })}
@@ -50,20 +41,15 @@ export const TablesMap = ({
             (table) => table.tableNo === t.tableNo
           )?.status;
           return (
-            <TableCard
+            <OrderTableCard
               key={t.tableNo}
               tableNo={t.tableNo}
-              setConfirmSelectedTableNo={(tableNo) =>
-                setConfirmSelectedTableNo(tableNo)
-              }
-              setConfirmTable={setConfirmTable}
               status={tableStatus as unknown as string}
               client={client || ""}
             />
           );
         })}
       </div>
-      {confirmTable && <ConfirmTable />}
     </TableContainer>
   );
 };
@@ -76,27 +62,20 @@ export const TableContainer = ({ children }: React.PropsWithChildren) => {
   );
 };
 
-export const TableCard = ({
+export const OrderTableCard = ({
   tableNo,
-
-  setConfirmSelectedTableNo,
-  setConfirmTable,
   status,
   client = "",
 }: {
   tableNo: string;
   status: string;
   client: string;
-  setConfirmSelectedTableNo: (tableNo: string) => void;
-  setConfirmTable: (popup: boolean) => void;
 }) => {
+  const navigate = useNavigate();
+  const { loadOrderTableNo } = useContext(GlobalContext).tableProvider;
   const handleSubmit = () => {
-    if (status !== "AVAILABLE") {
-      alert(" Table not available");
-    } else {
-      setConfirmSelectedTableNo(tableNo);
-      setConfirmTable(true);
-    }
+    navigate(`/order/${tableNo.toLowerCase()}`);
+    loadOrderTableNo(tableNo);
   };
 
   return (

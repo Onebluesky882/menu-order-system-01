@@ -64,7 +64,7 @@ const CheckOrder = () => {
           <PiCallBellFill />
         </li>
       </ul>
-      Check Order
+      Order Table
     </Link>
   );
 };

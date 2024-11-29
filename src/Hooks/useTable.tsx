@@ -6,6 +6,7 @@ import {
 } from "@/utils/string";
 import supabase from "@/utils/supabase";
 import { useEffect, useState } from "react";
+import table from "../Data/TableData";
 
 const defaultTable: Table = {
   status: "AVAILABLE" as const,
@@ -15,6 +16,7 @@ const defaultTable: Table = {
 
 export const useTable = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [ordersTable, setOrdersTable] = useState<Order[]>([]);
   const [table, setTable] = useState<Table>(defaultTable);
   const [allTables, setAllTables] = useState<Table[]>([]);
 
@@ -55,6 +57,20 @@ export const useTable = () => {
       const camelData = data.map((i) => transformKeysToCamelCase(i));
 
       setOrders(camelData);
+    }
+  };
+
+  const loadOrderTableNo = async (tableNo: string) => {
+    const { data } = await supabase
+      .from("orders")
+      .select()
+      .eq("table_no", tableNo);
+
+    if (data) {
+      const camelData = data.map((i) => transformKeysToCamelCase(i));
+
+      console.log("camelData :", camelData);
+      setOrdersTable(camelData);
     }
   };
 
@@ -123,6 +139,8 @@ export const useTable = () => {
     setTable,
     changeTableStatus,
     allTables,
+    loadOrderTableNo,
+    ordersTable,
   };
 };
 
@@ -134,4 +152,6 @@ export const defaultTableProvider = {
   setTable: () => null,
   changeTableStatus: () => Promise.resolve(),
   allTables: [],
+  loadOrderTableNo: () => Promise.resolve(),
+  ordersTable: [],
 };

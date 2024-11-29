@@ -7,7 +7,7 @@ import NotFound from "./Page/notFoundPage.tsx";
 import Table from "@/Page/Table";
 import TableNo from "./Page/Table/TableNo";
 import Orders from "./Page/Orders.tsx";
-import TableOrder from "./Page/Orders.tsx/TableOrder.tsx";
+import TableOrder from "./Page/Orders.tsx/OrderTable.tsx";
 import Menu from "./Page/Menu/index";
 import Waiter from "./Page/Waiter.tsx";
 import Promotions from "./Page/Promotions.tsx";
@@ -24,7 +24,7 @@ function App() {
           <Route path="/promotions" element={<Promotions />} />
           <Route path="/waiter" element={<Waiter />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/orders/:tableNo" element={<TableOrder />} />
+          <Route path="/order/:tableNo" element={<TableOrder />} />
           <Route path="/orders/" element={<Orders />} />
 
           <Route path="*" element={<NotFound />} />
