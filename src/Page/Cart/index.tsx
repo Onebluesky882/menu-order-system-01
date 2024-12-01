@@ -3,6 +3,7 @@ import { CartOrderCard } from "@/Components/CartOrderCard";
 import TableOrderCard from "@/Components/TableOrderCard";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { useContext } from "react";
+import Header from "../../Components/Layout/Header/index";
 
 const Cart = () => {
   const { orders, onAdd, onMinus } = useContext(GlobalContext).cartProvider;

@@ -1,4 +1,5 @@
-import { CartOrder, Order, OrderTable } from "@/types/Order";
+import { getMenuItem, menu } from "@/Data/Menu";
+import { CartOrder, Order, OrderTable, OrderTableNo } from "@/types/Order";
 import { Table } from "@/types/TableOrder";
 import {
   transformKeysToCamelCase,
@@ -6,7 +7,6 @@ import {
 } from "@/utils/string";
 import supabase from "@/utils/supabase";
 import { useEffect, useState } from "react";
-import table from "../Data/TableData";
 
 const defaultTable: Table = {
   status: "AVAILABLE" as const,
@@ -16,13 +16,14 @@ const defaultTable: Table = {
 
 export const useTable = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [ordersTable, setOrdersTable] = useState<Order[]>([]);
+  const [ordersTableNo, setOrdersTableNo] = useState<OrderTableNo[]>([]);
   const [table, setTable] = useState<Table>(defaultTable);
   const [allTables, setAllTables] = useState<Table[]>([]);
 
   useEffect(() => {
     loadOrder();
     loadTable();
+
     // passive interaction, trigger based on changes of the order relate to this table
     const channels = supabase
       .channel("subscribe-order-table-channel")
@@ -61,16 +62,37 @@ export const useTable = () => {
   };
 
   const loadOrderTableNo = async (tableNo: string) => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("orders")
       .select()
       .eq("table_no", tableNo);
-
+    if (error) {
+      return;
+    }
     if (data) {
-      const camelData = data.map((i) => transformKeysToCamelCase(i));
+      const camelData = data.map((item) => transformKeysToCamelCase(item));
 
-      console.log("camelData :", camelData);
-      setOrdersTable(camelData);
+      const mergeOrder: OrderTableNo[] = camelData
+        .map((item: Order) => {
+          const orderTableNo = menu.find((menu) => menu.id === item.menuId);
+
+          if (!orderTableNo) {
+            return undefined;
+          }
+          if (orderTableNo) {
+            const getMenu = getMenuItem(orderTableNo.id);
+
+            return {
+              ...item,
+              name: getMenu.name,
+              category: getMenu.category,
+              image: getMenu.image,
+              price: getMenu.price,
+            } as OrderTableNo;
+          }
+        })
+        .filter((item): item is OrderTableNo => item !== undefined);
+      setOrdersTableNo([...ordersTableNo, ...mergeOrder]);
     }
   };
 
@@ -114,10 +136,11 @@ export const useTable = () => {
   const loadTable = async () => {
     const { data } = await supabase.from("tables").select();
 
-    const transform =
-      data?.map((table) => transformKeysToCamelCase(table)) ?? [];
-
-    setAllTables(transform);
+    if (data) {
+      const transform =
+        data.map((table) => transformKeysToCamelCase(table)) ?? [];
+      setAllTables(transform);
+    }
   };
 
   //test createTable
@@ -139,8 +162,8 @@ export const useTable = () => {
     setTable,
     changeTableStatus,
     allTables,
+    ordersTableNo,
     loadOrderTableNo,
-    ordersTable,
   };
 };
 
@@ -153,5 +176,5 @@ export const defaultTableProvider = {
   changeTableStatus: () => Promise.resolve(),
   allTables: [],
   loadOrderTableNo: () => Promise.resolve(),
-  ordersTable: [],
+  ordersTableNo: [],
 };

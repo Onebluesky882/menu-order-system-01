@@ -1,25 +1,40 @@
-import { GlobalContext } from "@/Hooks/GlobalContext";
-import { useContext } from "react";
+type OrderTableProps = {
+  id: string;
+  amount: number;
+  status: "ORDERED" | "COOKING" | "DONE";
+  createdAt: string;
+  doneAt?: string;
+  name: string;
+  image: string;
+};
 
-const OrderTableCard = () => {
-  const { orders } = useContext(GlobalContext).tableProvider;
-
+const OrderTableCard = ({
+  id,
+  amount,
+  createdAt,
+  status,
+  doneAt,
+  name,
+  image,
+}: OrderTableProps) => {
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        backgroundColor: "blue",
+        backgroundColor: "green",
         width: "50px",
       }}
+      key={id}
     >
-      <h1>hello</h1>
-      <p>order id : </p>
-      <p>name </p>
-      <p>status </p>
-      <p>amount </p>
-      <p>order time : </p>
+      <p>order id : {id}</p>
+      <p>{name}</p>
+      <img src={image} alt="" width={20} />
+      <p>amount {amount} </p>
+      {doneAt !== null && <p>{doneAt}</p>}
+      <p>order time : {createdAt}</p>
+      <p>status : {status}</p>
     </div>
   );
 };

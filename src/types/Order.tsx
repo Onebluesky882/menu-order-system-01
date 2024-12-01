@@ -9,7 +9,14 @@ export type Order = {
   status: "ORDERED" | "COOKING" | "DONE";
   amount: number;
   createdAt: string;
-  doneAt?: string;
+  doneAt?: string | "";
+};
+
+export type OrderTableNo = Order & {
+  name: string;
+  price: number;
+  image: string;
+  category: string;
 };
 
 export type OrderTable = Order & { tableNo: string };
