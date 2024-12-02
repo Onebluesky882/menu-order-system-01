@@ -41,10 +41,29 @@ export const useTable = () => {
         }
       )
       .subscribe();
-    // console.log("subscribe");
+    const statusChannel = supabase
+      .channel("subscribe-table-status-channel")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "tables",
+        },
+        (payload: unknown) => {
+          console.log("Table status payload:", payload);
+          loadTable(); // Your function to handle table status updates
+        }
+      )
+      .subscribe((status) => {
+        if (!status) {
+          console.log("error");
+        }
+      });
 
     return () => {
       channels.unsubscribe();
+      statusChannel.unsubscribe();
     };
   }, []);
 
@@ -67,7 +86,7 @@ export const useTable = () => {
       .select()
       .eq("table_no", tableNo);
     if (error) {
-      return;
+      return setOrdersTableNo([]);
     }
     if (data) {
       const camelData = data.map((item) => transformKeysToCamelCase(item));
@@ -92,7 +111,8 @@ export const useTable = () => {
           }
         })
         .filter((item): item is OrderTableNo => item !== undefined);
-      setOrdersTableNo([...ordersTableNo, ...mergeOrder]);
+
+      setOrdersTableNo(mergeOrder);
     }
   };
 
@@ -139,6 +159,8 @@ export const useTable = () => {
     if (data) {
       const transform =
         data.map((table) => transformKeysToCamelCase(table)) ?? [];
+
+      console.log(" transform :", transform);
       setAllTables(transform);
     }
   };
@@ -164,6 +186,7 @@ export const useTable = () => {
     allTables,
     ordersTableNo,
     loadOrderTableNo,
+    setOrdersTableNo,
   };
 };
 
@@ -177,4 +200,5 @@ export const defaultTableProvider = {
   allTables: [],
   loadOrderTableNo: () => Promise.resolve(),
   ordersTableNo: [],
+  setOrdersTableNo: () => null,
 };

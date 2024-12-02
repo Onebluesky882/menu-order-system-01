@@ -1,54 +1,54 @@
 import { table as tableData } from "@/Data/TableData";
 import css from "./styles.module.css";
-import { useContext } from "react";
-import { GlobalContext } from "@/Hooks/GlobalContext";
-import { useNavigate } from "react-router-dom";
 
 type OrderTableProps = {
-  confirmTable: boolean;
-  setConfirmTable: () => void;
-  setConfirmSelectedTableNo: (tableNo: string) => void;
   client?: string;
+  status: string;
+  loadOrderTableNo: (table: string) => void;
+  setOrdersTableNo: () => void;
+  navigate: (url: string) => void;
 };
 
-export const OrderTables = ({ client }: OrderTableProps) => {
+export const OrderTables = ({
+  loadOrderTableNo,
+  navigate,
+  setOrdersTableNo,
+  status,
+  client,
+}: OrderTableProps) => {
   const tableRightSide = tableData.filter((t) => t.tableNo.startsWith("A"));
   const tableLeftSide = tableData.filter((t) => t.tableNo.startsWith("B"));
-
-  const { allTables } = useContext(GlobalContext).tableProvider;
 
   return (
     <TableContainer>
       <div className={css["table-container-section-left"]}>
-        {tableLeftSide.map((t) => {
-          const tableStatus = allTables.find(
-            (table) => table.tableNo === t.tableNo
-          )?.status;
-          return (
-            <OrderTableCard
-              key={t.tableNo}
-              status={tableStatus as unknown as string}
-              client={client || ""}
-              tableNo={t.tableNo}
-            />
-          );
-        })}
+        return (
+        {tableRightSide.map((table) => (
+          <OrderTableCard
+            status={status}
+            client={client || ""}
+            tableNo={table.tableNo}
+            loadOrderTableNo={() => loadOrderTableNo(table.tableNo)}
+            navigate={navigate}
+            setOrdersTableNo={setOrdersTableNo}
+          />
+        ))}
+        );
       </div>
 
       <div className={css["table-container-section-right"]}>
-        {tableRightSide.map((t) => {
-          const tableStatus = allTables.find(
-            (table) => table.tableNo === t.tableNo
-          )?.status;
-          return (
-            <OrderTableCard
-              key={t.tableNo}
-              tableNo={t.tableNo}
-              status={tableStatus as unknown as string}
-              client={client || ""}
-            />
-          );
-        })}
+        {tableLeftSide.map((table) => (
+          <OrderTableCard
+            status={status}
+            client={client || ""}
+            tableNo={table.tableNo}
+            loadOrderTableNo={() =>
+              loadOrderTableNo(table.tableNo as unknown as string)
+            }
+            navigate={navigate}
+            setOrdersTableNo={setOrdersTableNo}
+          />
+        ))}
       </div>
     </TableContainer>
   );
@@ -66,15 +66,20 @@ export const OrderTableCard = ({
   tableNo,
   status,
   client = "",
+  loadOrderTableNo,
+  setOrdersTableNo,
+  navigate,
 }: {
   tableNo: string;
   status: string;
   client: string;
+  loadOrderTableNo: (table: string) => void;
+  setOrdersTableNo: (item: []) => void;
+  navigate: (url: string) => void;
 }) => {
-  const navigate = useNavigate();
-  const { loadOrderTableNo } = useContext(GlobalContext).tableProvider;
   const handleSubmit = () => {
     navigate(`/order/${tableNo.toLowerCase()}`);
+    setOrdersTableNo([]);
     loadOrderTableNo(tableNo);
   };
 
@@ -87,6 +92,7 @@ export const OrderTableCard = ({
       onClick={handleSubmit}
     >
       {client !== "" && <p>{`${client}`}</p>}
+      <p>รายการอาหารคงค้าง</p>
       <p>{`${status} `}</p>
       <h3>{tableNo}</h3>
     </div>

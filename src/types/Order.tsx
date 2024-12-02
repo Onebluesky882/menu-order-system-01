@@ -6,7 +6,7 @@ export type CartOrder = {
 export type Order = {
   id: string;
   menuId: string;
-  status: "ORDERED" | "COOKING" | "DONE";
+  status: "ORDERED" | "COOKING" | "DONE" | "REJECTED" | "CANCEL";
   amount: number;
   createdAt: string;
   doneAt?: string | "";
