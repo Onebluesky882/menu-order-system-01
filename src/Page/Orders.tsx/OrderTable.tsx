@@ -11,6 +11,7 @@ const OrderTable = () => {
   return (
     <div>
       <h1>{tableNo}</h1>
+      <h2>to do chage status update order when 'done'</h2>
       {tableOrder.map((item) => (
         <OrderTableCard
           key={item.id}

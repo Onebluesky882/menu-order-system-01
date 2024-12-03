@@ -26,10 +26,15 @@ export const OrderTables = ({
       <div className={css["table-container-section-left"]}>
         {tableLeftSide.map((table) => {
           const { orderTables } = useContext(GlobalContext).tableProvider;
-          const matchTable = orderTables.find(
+          const matchTable = orderTables.filter(
             (t) => t.tableNo === table.tableNo
           );
 
+          const amount = matchTable.reduce(
+            (sum, order) => sum + order.amount,
+            0
+          );
+          console.log("matchTable :", amount);
           return (
             <OrderTableCard
               key={table.tableNo}
@@ -39,27 +44,38 @@ export const OrderTables = ({
               loadOrderTableNo={() => loadOrderTableNo(table.tableNo)}
               navigate={navigate}
               setTableOrder={setTableOrder}
-              orderAmount={4}
+              orderAmount={amount}
             />
           );
         })}
       </div>
 
       <div className={css["table-container-section-right"]}>
-        {tableRightSide.map((table) => (
-          <OrderTableCard
-            key={table.tableNo}
-            status={status}
-            client={client || ""}
-            tableNo={table.tableNo}
-            loadOrderTableNo={() =>
-              loadOrderTableNo(table.tableNo as unknown as string)
-            }
-            navigate={navigate}
-            setTableOrder={setTableOrder}
-            orderAmount={4}
-          />
-        ))}
+        {tableRightSide.map((table) => {
+          const { orderTables } = useContext(GlobalContext).tableProvider;
+          const matchTable = orderTables.filter(
+            (t) => t.tableNo === table.tableNo && t.status === "ORDERED"
+          );
+
+          const amount = matchTable.reduce(
+            (sum, order) => sum + order.amount,
+            0
+          );
+          return (
+            <OrderTableCard
+              key={table.tableNo}
+              status={status}
+              client={client || ""}
+              tableNo={table.tableNo}
+              loadOrderTableNo={() =>
+                loadOrderTableNo(table.tableNo as unknown as string)
+              }
+              navigate={navigate}
+              setTableOrder={setTableOrder}
+              orderAmount={amount}
+            />
+          );
+        })}
       </div>
     </TableContainer>
   );

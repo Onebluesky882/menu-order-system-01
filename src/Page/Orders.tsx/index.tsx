@@ -15,8 +15,8 @@ const Orders = () => {
         loadOrderTableNo={loadOrderTableNo}
         navigate={navigator}
         setTableOrder={() => setTableOrder(tableOrder)}
-        status={" todo "}
-        client={"todo"}
+        status={"status of orders"}
+        client={"client name"}
       />
     </div>
   );
