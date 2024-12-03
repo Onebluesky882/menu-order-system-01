@@ -19,7 +19,7 @@ export const ConfirmTable = () => {
   const cancelSubmit = () => {
     setConfirmTable(false);
   };
-  console.log("confirmSelectedTableNo : ", confirmSelectedTableNo);
+
   return (
     <div className={css["overlay"]}>
       <div className={css["popup"]}>

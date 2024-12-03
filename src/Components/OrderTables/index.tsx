@@ -1,5 +1,6 @@
 import { table as tableData } from "@/Data/TableData";
 import css from "./styles.module.css";
+import { OrderTableNo } from "@/types/Order";
 
 type OrderTableProps = {
   client?: string;
@@ -7,6 +8,7 @@ type OrderTableProps = {
   loadOrderTableNo: (table: string) => void;
   setOrdersTableNo: () => void;
   navigate: (url: string) => void;
+  ordersTableNo: any;
 };
 
 export const OrderTables = ({
@@ -15,6 +17,7 @@ export const OrderTables = ({
   setOrdersTableNo,
   status,
   client,
+  ordersTableNo,
 }: OrderTableProps) => {
   const tableRightSide = tableData.filter((t) => t.tableNo.startsWith("A"));
   const tableLeftSide = tableData.filter((t) => t.tableNo.startsWith("B"));
@@ -22,23 +25,24 @@ export const OrderTables = ({
   return (
     <TableContainer>
       <div className={css["table-container-section-left"]}>
-        return (
-        {tableRightSide.map((table) => (
+        {tableLeftSide.map((table) => (
           <OrderTableCard
+            key={table.tableNo}
             status={status}
             client={client || ""}
             tableNo={table.tableNo}
             loadOrderTableNo={() => loadOrderTableNo(table.tableNo)}
             navigate={navigate}
             setOrdersTableNo={setOrdersTableNo}
+            ordersTableNo={ordersTableNo}
           />
         ))}
-        );
       </div>
 
       <div className={css["table-container-section-right"]}>
-        {tableLeftSide.map((table) => (
+        {tableRightSide.map((table) => (
           <OrderTableCard
+            key={table.tableNo}
             status={status}
             client={client || ""}
             tableNo={table.tableNo}
@@ -47,6 +51,7 @@ export const OrderTables = ({
             }
             navigate={navigate}
             setOrdersTableNo={setOrdersTableNo}
+            ordersTableNo={ordersTableNo}
           />
         ))}
       </div>
@@ -69,10 +74,12 @@ export const OrderTableCard = ({
   loadOrderTableNo,
   setOrdersTableNo,
   navigate,
+  ordersTableNo,
 }: {
   tableNo: string;
   status: string;
   client: string;
+  ordersTableNo: [];
   loadOrderTableNo: (table: string) => void;
   setOrdersTableNo: (item: []) => void;
   navigate: (url: string) => void;
@@ -92,7 +99,7 @@ export const OrderTableCard = ({
       onClick={handleSubmit}
     >
       {client !== "" && <p>{`${client}`}</p>}
-      <p>รายการอาหารคงค้าง</p>
+      <p>รายการอาหารคงค้าง : {ordersTableNo}</p>
       <p>{`${status} `}</p>
       <h3>{tableNo}</h3>
     </div>

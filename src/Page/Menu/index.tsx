@@ -13,7 +13,7 @@ const Menu = () => {
   const menuFilter = menu.filter(
     (item) => item.category === category.toLocaleLowerCase()
   );
-  console.log("table.tableNo : ", table.tableNo);
+
   return (
     <div>
       <h2 style={{ textAlign: "center" }}> โต๊ะ {table.tableNo}</h2>

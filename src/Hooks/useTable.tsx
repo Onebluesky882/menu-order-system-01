@@ -160,7 +160,6 @@ export const useTable = () => {
       const transform =
         data.map((table) => transformKeysToCamelCase(table)) ?? [];
 
-      console.log(" transform :", transform);
       setAllTables(transform);
     }
   };
@@ -173,7 +172,14 @@ export const useTable = () => {
   //     status: table.status as unknown as string,
   //   }));
 
-  //   await supabase.from("tables").insert(transformKeysToSnakeCase(buildTable));
+  //   const { error } = await supabase
+  //     .from("tables")
+  //     .insert(transformKeysToSnakeCase(buildTable));
+  //   if (error) {
+  //     console.error("Error inserting data:");
+  //   } else {
+  //     console.log("Data inserted successfully");
+  //   }
   // };
 
   return {

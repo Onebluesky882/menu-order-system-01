@@ -1,3 +1,4 @@
+import OrderTableCard from "@/Components/OrderTables/OrderTableCard";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { useContext } from "react";
 
@@ -10,7 +11,16 @@ const OrderTable = () => {
   return (
     <div>
       <h1>{tableNo}</h1>
-      {ordersTableNo.map((item) => item.name)}
+      {ordersTableNo.map((item) => (
+        <OrderTableCard
+          key={item.id}
+          amount={item.amount}
+          status={"ORDERED"}
+          createdAt={item.createdAt}
+          name={item.name}
+          image={item.image}
+        />
+      ))}
     </div>
   );
 };

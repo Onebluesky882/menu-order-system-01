@@ -1,7 +1,7 @@
 export const table = [
   {
     tableNo: "A1",
-    status: "OCCUPIED",
+    status: "AVAILABLE",
     position: "left",
   },
   {

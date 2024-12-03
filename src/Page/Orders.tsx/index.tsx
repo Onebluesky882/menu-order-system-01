@@ -7,6 +7,12 @@ const Orders = () => {
   const navigator = useNavigate();
   const { ordersTableNo, loadOrderTableNo, setOrdersTableNo } =
     useContext(GlobalContext).tableProvider;
+
+  const countOrderTable = ordersTableNo.filter((item) => item.amount);
+  const sumOrder = countOrderTable.forEach((item) => (item.amount += 1));
+
+  console.log("sumOrder :", sumOrder);
+
   return (
     <div>
       <h1></h1>
@@ -16,6 +22,7 @@ const Orders = () => {
         setOrdersTableNo={() => setOrdersTableNo(ordersTableNo)}
         status={" todo "}
         client={"todo"}
+        ordersTableNo={countOrderTable}
       />
     </div>
   );
