@@ -13,6 +13,7 @@ export const ConfirmTable = () => {
   const confirmSubmit = async () => {
     await changeTableStatus(confirmSelectedTableNo as Table["tableNo"]);
     setConfirmTable(false);
+
     navigator("/menu");
   };
 

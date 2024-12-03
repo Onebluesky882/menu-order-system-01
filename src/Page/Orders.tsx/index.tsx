@@ -5,13 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
   const navigator = useNavigate();
-  const { ordersTableNo, loadOrderTableNo, setOrdersTableNo } =
+  const { tableOrder, loadOrderTableNo, setTableOrder } =
     useContext(GlobalContext).tableProvider;
-
-  const countOrderTable = ordersTableNo.filter((item) => item.amount);
-  const sumOrder = countOrderTable.forEach((item) => (item.amount += 1));
-
-  console.log("sumOrder :", sumOrder);
 
   return (
     <div>
@@ -19,10 +14,9 @@ const Orders = () => {
       <OrderTables
         loadOrderTableNo={loadOrderTableNo}
         navigate={navigator}
-        setOrdersTableNo={() => setOrdersTableNo(ordersTableNo)}
+        setTableOrder={() => setTableOrder(tableOrder)}
         status={" todo "}
         client={"todo"}
-        ordersTableNo={countOrderTable}
       />
     </div>
   );

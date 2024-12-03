@@ -1,8 +1,10 @@
 import { FaClipboardList } from "react-icons/fa";
 import { PiCallBellFill } from "react-icons/pi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdTableBar } from "react-icons/md";
 import css from "./Footer.module.css";
+import { useContext } from "react";
+import { GlobalContext } from "@/Hooks/GlobalContext";
 
 const Footer = () => {
   return (
@@ -57,8 +59,15 @@ const Waiter = () => {
   );
 };
 const CheckOrder = () => {
+  const { setTableOrder } = useContext(GlobalContext).tableProvider;
   return (
-    <Link to="/orders" className={css["link"]}>
+    <Link
+      to="/orders"
+      className={css["link"]}
+      onClick={() => {
+        setTableOrder([]);
+      }}
+    >
       <ul className={css["ul"]}>
         <li>
           <PiCallBellFill />

@@ -1,23 +1,22 @@
 import { table as tableData } from "@/Data/TableData";
 import css from "./styles.module.css";
-import { OrderTableNo } from "@/types/Order";
+import { useContext } from "react";
+import { GlobalContext } from "@/Hooks/GlobalContext";
 
 type OrderTableProps = {
   client?: string;
   status: string;
   loadOrderTableNo: (table: string) => void;
-  setOrdersTableNo: () => void;
+  setTableOrder: () => void;
   navigate: (url: string) => void;
-  ordersTableNo: any;
 };
 
 export const OrderTables = ({
   loadOrderTableNo,
   navigate,
-  setOrdersTableNo,
+  setTableOrder,
   status,
   client,
-  ordersTableNo,
 }: OrderTableProps) => {
   const tableRightSide = tableData.filter((t) => t.tableNo.startsWith("A"));
   const tableLeftSide = tableData.filter((t) => t.tableNo.startsWith("B"));
@@ -25,18 +24,25 @@ export const OrderTables = ({
   return (
     <TableContainer>
       <div className={css["table-container-section-left"]}>
-        {tableLeftSide.map((table) => (
-          <OrderTableCard
-            key={table.tableNo}
-            status={status}
-            client={client || ""}
-            tableNo={table.tableNo}
-            loadOrderTableNo={() => loadOrderTableNo(table.tableNo)}
-            navigate={navigate}
-            setOrdersTableNo={setOrdersTableNo}
-            ordersTableNo={ordersTableNo}
-          />
-        ))}
+        {tableLeftSide.map((table) => {
+          const { orderTables } = useContext(GlobalContext).tableProvider;
+          const matchTable = orderTables.find(
+            (t) => t.tableNo === table.tableNo
+          );
+
+          return (
+            <OrderTableCard
+              key={table.tableNo}
+              status={status}
+              client={client || ""}
+              tableNo={table.tableNo}
+              loadOrderTableNo={() => loadOrderTableNo(table.tableNo)}
+              navigate={navigate}
+              setTableOrder={setTableOrder}
+              orderAmount={4}
+            />
+          );
+        })}
       </div>
 
       <div className={css["table-container-section-right"]}>
@@ -50,8 +56,8 @@ export const OrderTables = ({
               loadOrderTableNo(table.tableNo as unknown as string)
             }
             navigate={navigate}
-            setOrdersTableNo={setOrdersTableNo}
-            ordersTableNo={ordersTableNo}
+            setTableOrder={setTableOrder}
+            orderAmount={4}
           />
         ))}
       </div>
@@ -72,21 +78,20 @@ export const OrderTableCard = ({
   status,
   client = "",
   loadOrderTableNo,
-  setOrdersTableNo,
   navigate,
-  ordersTableNo,
+  orderAmount,
 }: {
   tableNo: string;
   status: string;
   client: string;
-  ordersTableNo: [];
+  orderAmount: number;
+  setTableOrder: ([]) => void;
   loadOrderTableNo: (table: string) => void;
-  setOrdersTableNo: (item: []) => void;
+
   navigate: (url: string) => void;
 }) => {
   const handleSubmit = () => {
     navigate(`/order/${tableNo.toLowerCase()}`);
-    setOrdersTableNo([]);
     loadOrderTableNo(tableNo);
   };
 
@@ -99,7 +104,7 @@ export const OrderTableCard = ({
       onClick={handleSubmit}
     >
       {client !== "" && <p>{`${client}`}</p>}
-      <p>รายการอาหารคงค้าง : {ordersTableNo}</p>
+      <p>รายการอาหารคงค้าง : {orderAmount} </p>
       <p>{`${status} `}</p>
       <h3>{tableNo}</h3>
     </div>

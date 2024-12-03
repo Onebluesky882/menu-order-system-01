@@ -1,5 +1,11 @@
 import { getMenuItem, menu } from "@/Data/Menu";
-import { CartOrder, Order, OrderTable, OrderTableNo } from "@/types/Order";
+import {
+  CartOrder,
+  Order,
+  OrderTable,
+  OrderTableNo,
+  OrderTables,
+} from "@/types/Order";
 import { Table } from "@/types/TableOrder";
 import {
   transformKeysToCamelCase,
@@ -16,14 +22,15 @@ const defaultTable: Table = {
 
 export const useTable = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [ordersTableNo, setOrdersTableNo] = useState<OrderTableNo[]>([]);
+  const [tableOrder, setTableOrder] = useState<OrderTableNo[]>([]);
   const [table, setTable] = useState<Table>(defaultTable);
   const [allTables, setAllTables] = useState<Table[]>([]);
+  const [orderTables, setOrderTables] = useState<OrderTables[]>([]);
 
   useEffect(() => {
     loadOrder();
     loadTable();
-
+    loadOrderTables();
     // passive interaction, trigger based on changes of the order relate to this table
     const channels = supabase
       .channel("subscribe-order-table-channel")
@@ -86,7 +93,7 @@ export const useTable = () => {
       .select()
       .eq("table_no", tableNo);
     if (error) {
-      return setOrdersTableNo([]);
+      return setTableOrder([]);
     }
     if (data) {
       const camelData = data.map((item) => transformKeysToCamelCase(item));
@@ -112,7 +119,17 @@ export const useTable = () => {
         })
         .filter((item): item is OrderTableNo => item !== undefined);
 
-      setOrdersTableNo(mergeOrder);
+      setTableOrder(mergeOrder);
+    }
+  };
+
+  // todo
+  const loadOrderTables = async () => {
+    const { data } = await supabase.from("orders").select();
+    if (data) {
+      const transform = data.map((order) => transformKeysToCamelCase(order));
+
+      setOrderTables(transform);
     }
   };
 
@@ -190,9 +207,10 @@ export const useTable = () => {
     setTable,
     changeTableStatus,
     allTables,
-    ordersTableNo,
+    tableOrder,
     loadOrderTableNo,
-    setOrdersTableNo,
+    setTableOrder,
+    orderTables,
   };
 };
 
@@ -207,4 +225,5 @@ export const defaultTableProvider = {
   loadOrderTableNo: () => Promise.resolve(),
   ordersTableNo: [],
   setOrdersTableNo: () => null,
+  orderTables: [],
 };

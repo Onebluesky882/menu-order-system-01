@@ -19,4 +19,8 @@ export type OrderTableNo = Order & {
   category: string;
 };
 
+export type OrderTables = Order & {
+  tableNo: string;
+};
+
 export type OrderTable = Order & { tableNo: string };

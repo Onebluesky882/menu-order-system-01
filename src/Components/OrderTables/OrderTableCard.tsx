@@ -19,9 +19,8 @@ const OrderTableCard = ({
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
         justifyContent: "center",
-        backgroundColor: "green",
+        border: "1px solid gray",
       }}
     >
       <p>{name}</p>
