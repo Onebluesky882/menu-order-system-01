@@ -1,11 +1,12 @@
 import { FaClipboardList } from "react-icons/fa";
 import { PiCallBellFill } from "react-icons/pi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdTableBar } from "react-icons/md";
 import css from "./Footer.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
-
+import OrderBoxCard from "@/Components/OrderBoxCard";
+import { PiShoppingCartSimple } from "react-icons/pi";
 const Footer = () => {
   return (
     <footer className={css["footer-style"]}>
@@ -16,7 +17,57 @@ const Footer = () => {
         <Waiter />
         <CheckOrder />
       </div>
+      <OrderBox />
     </footer>
+  );
+};
+
+const OrderBox = () => {
+  const { orders, onAdd, onMinus } = useContext(GlobalContext).cartProvider;
+  const [click, setClick] = useState(false);
+
+  const totalAmount = orders.reduce((sum, item) => sum + item.amount, 0);
+  return (
+    <div className={css["Orderbox"]}>
+      <div style={{ position: "relative" }}>
+        <PiShoppingCartSimple
+          color="white"
+          size={40}
+          textAnchor="click"
+          onClick={() => setClick((prev) => !prev)}
+          style={{
+            background: "#87C990",
+            padding: "10px",
+            borderRadius: "100px",
+          }}
+        />
+        <p
+          style={{
+            display: "block",
+            color: "red",
+            position: "absolute",
+            transform: " translate(240%, -200%)",
+          }}
+        >
+          {totalAmount}
+        </p>
+      </div>
+
+      {click && (
+        <div className={css["cart-popup"]}>
+          {orders.map((order) => (
+            <OrderBoxCard
+              key={order.menuId}
+              order={order}
+              onAdd={onAdd}
+              onMinus={onMinus}
+            />
+          ))}
+          <button>reset</button>
+          <button>Confirm Order</button>
+        </div>
+      )}
+    </div>
   );
 };
 

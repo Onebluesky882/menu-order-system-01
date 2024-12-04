@@ -17,16 +17,7 @@ const Menu = () => {
   return (
     <div>
       <h2 style={{ textAlign: "center" }}> โต๊ะ {table.tableNo}</h2>
-      <div style={{ textAlign: "center" }}>
-        {orders.map((i) => (
-          <CartOrderCard
-            order={i}
-            onMinus={onAdd}
-            onAdd={onMinus}
-            key={i.menuId}
-          />
-        ))}
-      </div>
+
       <SidebarLeft />
       <SidebarRight />
       <div className="ProductCardContainer">

@@ -1,0 +1,10 @@
+.container {
+  content: "container";
+  display: flex;
+  justify-content: center;
+}
+.box {
+  border-radius: 8px;
+  padding: 20px;
+  background-color: rgb(255, 240, 226);
+}

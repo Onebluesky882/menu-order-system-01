@@ -1,11 +1,19 @@
 :root {
   font-family: "Prompt", sans-serif;
-
+  min-height: 100vh;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+html,
+body {
+  height: 100%; /* Ensure the body takes full height */
+  margin: 0; /* Remove default margin */
+}
 
+p {
+  color: #484848;
+}
 .prompt-thin {
   font-family: "Prompt", sans-serif;
   font-weight: 100;

@@ -3,9 +3,6 @@
   padding: 0;
   user-select: none;
 }
-body {
-  min-height: 100vh;
-}
 
 /*mobile responsive */
 @media screen and (max-width: 600px) {

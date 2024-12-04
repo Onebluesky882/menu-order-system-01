@@ -4,10 +4,19 @@ import Footer from "./Footer/Footer";
 
 export default function Layout() {
   return (
-    <main>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        userSelect: "none",
+      }}
+    >
       <Header />
-      <Outlet />
+      <main style={{ flex: 1 }}>
+        <Outlet />
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 }
