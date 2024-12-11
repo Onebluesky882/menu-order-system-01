@@ -22,6 +22,10 @@ const OrderTable = () => {
           image={item.image}
         />
       ))}
+      <div>
+        <button>Add more item</button>
+        <button>Check the bill</button>
+      </div>
     </div>
   );
 };
