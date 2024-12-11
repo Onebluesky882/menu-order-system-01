@@ -54,7 +54,11 @@ export const MenuCard = ({
       </p>
       <div
         className="box-content"
-        style={{ display: "flex", justifyContent: "center" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         {" "}
         {!clickMinus ? (

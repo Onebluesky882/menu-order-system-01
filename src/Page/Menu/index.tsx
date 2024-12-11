@@ -1,4 +1,3 @@
-import { CartOrderCard } from "@/Components/CartOrderCard";
 import { SidebarLeft, SidebarRight } from "@/Components/Sidebar";
 import { menu } from "../../Data/Menu";
 import { GlobalContext } from "@/Hooks/GlobalContext";
@@ -7,8 +6,7 @@ import { MenuCard } from "@/Components/MenuCard";
 
 const Menu = () => {
   const { table } = useContext(GlobalContext).tableProvider;
-  const { category, orders, onAdd, onMinus } =
-    useContext(GlobalContext).cartProvider;
+  const { category, onAdd, onMinus } = useContext(GlobalContext).cartProvider;
 
   const menuFilter = menu.filter(
     (item) => item.category === category.toLocaleLowerCase()
