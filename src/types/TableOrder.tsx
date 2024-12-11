@@ -3,6 +3,7 @@ export type Table = {
   seat: number;
   status: "AVAILABLE" | "OCCUPIED" | "RESERVED" | "CLEANING";
   position?: "left" | "right";
+  customerName?: "";
 };
 
-export type NameTable = Table & { name?: string };
+export type TableReserve = Table & { name?: string };

@@ -1,5 +1,6 @@
 import { TablesMap } from "@/Components/Table/Tables";
 import { GlobalContext } from "@/Hooks/GlobalContext";
+import { table } from "console";
 
 import { useContext } from "react";
 const Table = () => {

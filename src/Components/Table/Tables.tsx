@@ -66,7 +66,7 @@ export const TablesMap = ({
           );
         })}
       </div>
-      {true && <ConfirmTable />}
+      {confirmTable && <ConfirmTable />}
     </TableContainer>
   );
 };

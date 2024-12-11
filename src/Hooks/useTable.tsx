@@ -6,7 +6,7 @@ import {
   OrderTableNo,
   OrderTables,
 } from "@/types/Order";
-import { Table } from "@/types/TableOrder";
+import { Table, TableReserve } from "@/types/TableOrder";
 import {
   transformKeysToCamelCase,
   transformKeysToSnakeCase,
@@ -18,6 +18,7 @@ const defaultTable: Table = {
   status: "AVAILABLE" as const,
   tableNo: "0",
   seat: 3,
+  customerName: "",
 };
 
 export const useTable = () => {
@@ -26,6 +27,7 @@ export const useTable = () => {
   const [table, setTable] = useState<Table>(defaultTable);
   const [allTables, setAllTables] = useState<Table[]>([]);
   const [orderTables, setOrderTables] = useState<OrderTables[]>([]);
+  const [client, setClient] = useState<string>("");
 
   useEffect(() => {
     loadOrder();
@@ -199,7 +201,35 @@ export const useTable = () => {
   //   }
   // };
 
+  // add customer to reserve table
+  const CustomerFieldName = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const getDataForm = new FormData(e.currentTarget);
+    // keep data from input ui to state
+
+    const convert = {
+      ...defaultTable,
+      customerName: getDataForm.get("name"),
+    };
+
+    console.log("table.tableNo :", table);
+    console.log("convert  :", convert);
+    const transform = transformKeysToSnakeCase(convert);
+    console.log("Transformed data:", transform);
+    const { data, error } = await supabase
+      .from("tables")
+      .update(transform)
+      .eq("table_no", table);
+    if (data) {
+      console.log("Update successful:", data);
+    } else {
+      console.error("Update failed:", error);
+    }
+  };
+
   return {
+    client,
+    setClient,
     orders,
     setOrders,
     submitCart,
@@ -211,6 +241,7 @@ export const useTable = () => {
     loadOrderTableNo,
     setTableOrder,
     orderTables,
+    CustomerFieldName,
   };
 };
 
@@ -226,4 +257,6 @@ export const defaultTableProvider = {
   ordersTableNo: [],
   setOrdersTableNo: () => null,
   orderTables: [],
+  setClient: () => Promise.resolve(),
+  CustomerFieldName: () => Promise.resolve(),
 };
