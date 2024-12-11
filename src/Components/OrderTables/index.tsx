@@ -121,7 +121,9 @@ export const OrderTableCard = ({
     >
       {" "}
       <h3>{tableNo}</h3>
-      {client !== "" && <p>{`${client}`}</p>}
+      {client !== "" && (
+        <p style={{ fontWeight: "bolder", fontSize: "25px" }}>{`${client}`}</p>
+      )}
       {orderAmount !== 0 && (
         <p style={{ fontWeight: "bolder", fontSize: "20px" }}>
           รายการอาหาร : {orderAmount}{" "}
