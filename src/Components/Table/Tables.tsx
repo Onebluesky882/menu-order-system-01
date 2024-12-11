@@ -1,7 +1,7 @@
 import { table as tableData } from "@/Data/TableData";
 import css from "./Table.module.css";
 import { ConfirmTable } from "./ConfirmTable";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 
 type TableMapProps = {
@@ -29,17 +29,20 @@ export const TablesMap = ({
           const tableStatus = allTables.find(
             (table) => table.tableNo === t.tableNo
           )?.status;
+
           return (
-            <TableCard
-              key={t.tableNo}
-              tableNo={t.tableNo}
-              setConfirmSelectedTableNo={(tableNo) =>
-                setConfirmSelectedTableNo(tableNo)
-              }
-              setConfirmTable={setConfirmTable}
-              status={tableStatus as unknown as string}
-              client={client || ""}
-            />
+            <>
+              <TableCard
+                key={t.tableNo}
+                tableNo={t.tableNo}
+                setConfirmSelectedTableNo={(tableNo) =>
+                  setConfirmSelectedTableNo(tableNo)
+                }
+                setConfirmTable={setConfirmTable}
+                status={tableStatus as unknown as string}
+                client={client || ""}
+              />
+            </>
           );
         })}
       </div>
@@ -63,7 +66,7 @@ export const TablesMap = ({
           );
         })}
       </div>
-      {confirmTable && <ConfirmTable />}
+      {true && <ConfirmTable />}
     </TableContainer>
   );
 };
@@ -78,7 +81,6 @@ export const TableContainer = ({ children }: React.PropsWithChildren) => {
 
 export const TableCard = ({
   tableNo,
-
   setConfirmSelectedTableNo,
   setConfirmTable,
   status,
