@@ -107,8 +107,13 @@ export const OrderTableCard = ({
   navigate: (url: string) => void;
 }) => {
   const handleSubmit = () => {
-    navigate(`/order/${tableNo.toLowerCase()}`);
-    loadOrderTableNo(tableNo);
+    if (orderAmount === 0) {
+      alert("เลือกโต๊ะอาหาร");
+      navigate("/tables");
+    } else {
+      navigate(`/order/${tableNo.toLowerCase()}`);
+      loadOrderTableNo(tableNo);
+    }
   };
 
   return (
