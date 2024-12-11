@@ -115,28 +115,32 @@ export const OrderTableCard = ({
     <div
       className={css["table-frame-rounded"]}
       style={{
-        ...TableStatusColor(status),
+        ...TableStatusColor(orderAmount),
       }}
       onClick={handleSubmit}
     >
-      {client !== "" && <p>{`${client}`}</p>}
-      <p>รายการอาหารคงค้าง : {orderAmount} </p>
-      <p>{`${status} `}</p>
+      {" "}
       <h3>{tableNo}</h3>
+      {client !== "" && <p>{`${client}`}</p>}
+      {orderAmount !== 0 && (
+        <p style={{ fontWeight: "bolder", fontSize: "20px" }}>
+          รายการอาหาร : {orderAmount}{" "}
+        </p>
+      )}
+      <p>{`${status} `}</p>
     </div>
   );
 };
 
-export const TableStatusColor = (status: string): React.CSSProperties => {
-  switch (status) {
-    case "AVAILABLE":
-      return { backgroundColor: "#B2D3AC" };
-    case "OCCUPIED":
-      return { backgroundColor: "#E98874" };
-    case "CLEANING":
-      return { backgroundColor: "#ADB2BF" };
-    case "RESERVED":
-      return { backgroundColor: "#F7CC43" };
+export const TableStatusColor = (count: number): React.CSSProperties => {
+  switch (true) {
+    case count === 0:
+      return { backgroundColor: "#B4D59D" };
+    case count > 1 && count <= 5:
+      return { backgroundColor: "#F1BF42" };
+    case 5 >= 20:
+      return { backgroundColor: "#C95441" };
+
     default:
       return {
         backgroundColor: "white",
