@@ -16,7 +16,10 @@ const Menu = () => {
 
   return (
     <div>
-      <h2 style={{ textAlign: "center" }}> โต๊ะ {table.tableNo}</h2>
+      <h2 style={{ textAlign: "center", marginTop: "20px" }}>
+        {" "}
+        {table.tableNo === "0" ? "เมนูอาหาร" : `โต๊ะ ${table.tableNo}`}
+      </h2>
 
       <SidebarLeft />
       <SidebarRight />
