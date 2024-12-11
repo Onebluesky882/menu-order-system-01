@@ -4,6 +4,7 @@ import { HiOutlineMinusCircle, HiOutlinePlusCircle } from "react-icons/hi";
 import css from "./MenuCard.module.css";
 import { useContext, useState } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
+import { useNavigate } from "react-router-dom";
 
 export type MenuCardProps = MenuItem;
 
@@ -16,26 +17,39 @@ export const MenuCard = ({
   onAdd,
 }: MenuCardProps & { onMinus: any; onAdd: any }) => {
   const { orders } = useContext(GlobalContext).cartProvider;
+  const { table } = useContext(GlobalContext).tableProvider;
   const menu = orders.find((item) => item.menuId === id);
   const amount = menu?.amount ?? 0;
 
   const [clickPlus, setClickPlus] = useState(false);
   const [clickMinus, setClickMinus] = useState(false);
 
+  const navigator = useNavigate();
+
   const handlePlus = () => {
-    setClickPlus(true);
-    onAdd({ menuId: id });
-    setTimeout(() => {
-      setClickPlus(false);
-    }, 100);
+    if (table.tableNo === "0") {
+      alert("กรุณาเลือกโต๊ะอาหาร");
+      navigator("/orders");
+    } else {
+      setClickPlus(true);
+      onAdd({ menuId: id });
+      setTimeout(() => {
+        setClickPlus(false);
+      }, 100);
+    }
   };
 
   const handleMinus = () => {
-    setClickMinus(true);
-    onMinus({ menuId: id });
-    setTimeout(() => {
-      setClickMinus(false);
-    }, 100);
+    if (table.tableNo === "0") {
+      alert("กรุณาเลือกโต๊ะอาหาร");
+      navigator("/orders");
+    } else {
+      setClickMinus(true);
+      onMinus({ menuId: id });
+      setTimeout(() => {
+        setClickMinus(false);
+      }, 100);
+    }
   };
 
   return (
