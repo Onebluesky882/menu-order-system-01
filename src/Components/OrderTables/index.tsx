@@ -1,4 +1,4 @@
-import { table as tableData } from "@/Data/TableData";
+import tableLocal from "@/Data/TableData";
 import css from "./styles.module.css";
 import { useContext } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
@@ -18,8 +18,8 @@ export const OrderTables = ({
   status,
   client,
 }: OrderTableProps) => {
-  const tableRightSide = tableData.filter((t) => t.tableNo.startsWith("A"));
-  const tableLeftSide = tableData.filter((t) => t.tableNo.startsWith("B"));
+  const tableRightSide = tableLocal.filter((t) => t.tableNo.startsWith("A"));
+  const tableLeftSide = tableLocal.filter((t) => t.tableNo.startsWith("B"));
 
   return (
     <TableContainer>

@@ -23,7 +23,6 @@ export const TablesMap = ({
 
   const { tableObject } = useContext(GlobalContext).tableProvider;
 
-  console.log();
   return (
     <TableContainer>
       <div className={css["table-container-section-left"]}>
@@ -31,7 +30,7 @@ export const TablesMap = ({
           const tableStatus = tableObject.find(
             (table) => table.tableNo === t.tableNo
           )?.status;
-          console.log(t.tableNo);
+
           return (
             <>
               <TableCard

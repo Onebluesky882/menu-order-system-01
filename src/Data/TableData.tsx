@@ -1,4 +1,4 @@
-export const table = [
+export const tableLocal = [
   {
     tableNo: "A1",
     status: "AVAILABLE",
@@ -46,4 +46,4 @@ export const table = [
   },
 ];
 
-export default table;
+export default tableLocal;

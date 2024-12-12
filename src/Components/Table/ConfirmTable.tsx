@@ -8,11 +8,12 @@ export const ConfirmTable = () => {
   const navigator = useNavigate();
   const { setConfirmTable, confirmSelectedTableNo } = useContext(GlobalContext);
 
-  const { changeTableStatus, CustomerFieldName } =
+  const { changeTableOnSubmit, customerName } =
     useContext(GlobalContext).tableProvider;
 
   const confirmSubmit = async () => {
-    await changeTableStatus(confirmSelectedTableNo as Table["tableNo"]);
+    await changeTableOnSubmit(confirmSelectedTableNo as Table["tableNo"]);
+
     setConfirmTable(false);
 
     navigator("/menu");
@@ -21,12 +22,12 @@ export const ConfirmTable = () => {
   const cancelSubmit = () => {
     setConfirmTable(false);
   };
-
+  console.log("customerName :", customerName);
   return (
     <div className={css["overlay"]}>
       <div className={css["popup"]}>
         <h2>ยืนยันโต๊ะ {confirmSelectedTableNo} </h2>{" "}
-        <form onSubmit={CustomerFieldName}>
+        <form onSubmit={confirmSubmit}>
           <div className={css.divInput}>
             <p>กรอกชื่อเล่น</p>
             <input

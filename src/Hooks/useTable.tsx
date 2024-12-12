@@ -1,4 +1,5 @@
 import { getMenuItem, menu } from "@/Data/Menu";
+import { tableLocal } from "@/Data/TableData";
 import {
   CartOrder,
   Order,
@@ -25,12 +26,9 @@ export const useTable = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [tableOrder, setTableOrder] = useState<OrderTableNo[]>([]);
   const [table, setTable] = useState<Table>(defaultTable);
-  const [allTables, setAllTables] = useState<Table[]>([]);
+  const [tableObject, setTablesObject] = useState<Table[]>([]);
   const [orderTables, setOrderTables] = useState<OrderTables[]>([]);
-
-  const [confirmSelectedTableNo, setConfirmSelectedTableNo] = useState<
-    string | null
-  >(null);
+  const [customerName, setCustomerName] = useState<string | null>(null);
 
   useEffect(() => {
     loadOrder();
@@ -156,8 +154,14 @@ export const useTable = () => {
     setOrders([...orders, ...prepareOrder]);
   };
 
-  const changeTableStatus = async (No: Table["tableNo"]) => {
-    const newTable = { ...defaultTable, tableNo: No, status: "OCCUPIED" };
+  const changeTableOnSubmit = async (No: Table["tableNo"]) => {
+    // todo
+    const newTable = {
+      ...defaultTable,
+      tableNo: No,
+      status: "AVAILABLE",
+      customerName: customerName,
+    };
     const { data, error } = await supabase
       .from("tables")
       .update(transformKeysToSnakeCase(newTable))
@@ -171,8 +175,6 @@ export const useTable = () => {
       return;
     }
     setTable(newTable as Table);
-
-    await loadTable();
   };
 
   const loadTable = async () => {
@@ -182,51 +184,19 @@ export const useTable = () => {
       const transform =
         data.map((table) => transformKeysToCamelCase(table)) ?? [];
 
-      setAllTables(transform);
+      setTablesObject(transform);
     }
   };
 
-  //test createTable
-  // const createTable = async () => {
-  //   const buildTable = tables.map((table) => ({
-  //     tableNo: table.tableNo as unknown as string,
-  //     seat: 0,
-  //     status: table.status as unknown as string,
-  //   }));
-
-  //   const { error } = await supabase
-  //     .from("tables")
-  //     .insert(transformKeysToSnakeCase(buildTable));
-  //   if (error) {
-  //     console.error("Error inserting data:");
-  //   } else {
-  //     console.log("Data inserted successfully");
-  //   }
-  // };
-
-  // add customer to reserve table
+  // add customer name to table
   const CustomerFieldName = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const getDataForm = new FormData(e.currentTarget);
-    // keep data from input ui to state
+    const nameField = new FormData(e.currentTarget);
 
-    const convert = {
-      ...defaultTable,
-      customerName: getDataForm.get("name"),
-    };
+    const name = nameField.get("name");
 
-    const transform = transformKeysToSnakeCase(convert);
-    console.log("Transformed data:", transform);
-    console.log("confirmSelectedTableNo:", confirmSelectedTableNo);
-    const { data, error } = await supabase
-      .from("tables")
-      .update(transform)
-      .eq("table_no", confirmSelectedTableNo);
-    if (data) {
-      console.log("Update successful:", data);
-    } else {
-      console.error("Update failed:", error);
-    }
+    setCustomerName(name as string);
+    console.log("Updated customerName:", customerName);
   };
 
   return {
@@ -235,15 +205,14 @@ export const useTable = () => {
     submitCart,
     table,
     setTable,
-    changeTableStatus,
-    allTables,
+    changeTableOnSubmit,
+    tableObject,
     tableOrder,
     loadOrderTableNo,
     setTableOrder,
     orderTables,
     CustomerFieldName,
-    setConfirmSelectedTableNo,
-    confirmSelectedTableNo,
+    customerName,
   };
 };
 
@@ -253,15 +222,14 @@ export const defaultTableProvider = {
   setOrders: () => null,
   submitCart: () => Promise.resolve(),
   setTable: () => null,
-  changeTableStatus: () => Promise.resolve(),
-  allTables: [],
+  changeTableOnSubmit: () => Promise.resolve(),
+  tableObject: [],
   loadOrderTableNo: () => Promise.resolve(),
   ordersTableNo: [],
   setOrdersTableNo: () => null,
   orderTables: [],
   CustomerFieldName: () => Promise.resolve(),
-  setConfirmSelectedTableNo: () => null,
-  confirmSelectedTableNo: null,
   tableOrder: [],
   setTableOrder: () => null,
+  customerName: "",
 };
