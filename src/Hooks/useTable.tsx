@@ -1,5 +1,4 @@
 import { getMenuItem, menu } from "@/Data/Menu";
-import { tableLocal } from "@/Data/TableData";
 import {
   CartOrder,
   Order,
@@ -126,7 +125,6 @@ export const useTable = () => {
     }
   };
 
-  // todo
   const loadOrderTables = async () => {
     const { data } = await supabase.from("orders").select();
     if (data) {
@@ -154,26 +152,22 @@ export const useTable = () => {
     setOrders([...orders, ...prepareOrder]);
   };
 
-  const changeTableOnSubmit = async (No: Table["tableNo"]) => {
+  const changeTableOnSubmit = async (
+    customerName: Table["customerName"],
+    No: Table["tableNo"]
+  ) => {
     // todo
     const newTable = {
       ...defaultTable,
       tableNo: No,
-      status: "AVAILABLE",
+      status: "OCCUPIED",
       customerName: customerName,
     };
-    const { data, error } = await supabase
+    await supabase
       .from("tables")
       .update(transformKeysToSnakeCase(newTable))
       .eq("table_no", No);
-    if (data) {
-      console.log("newTable :", newTable);
-    }
 
-    if (error) {
-      console.error("Error updating table:", error);
-      return;
-    }
     setTable(newTable as Table);
   };
 
@@ -195,8 +189,9 @@ export const useTable = () => {
 
     const name = nameField.get("name");
 
-    setCustomerName(name as string);
-    console.log("Updated customerName:", customerName);
+    if (name) {
+      setCustomerName(name as string);
+    }
   };
 
   return {

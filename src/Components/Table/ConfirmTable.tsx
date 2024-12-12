@@ -8,17 +8,19 @@ export const ConfirmTable = () => {
   const navigator = useNavigate();
   const { setConfirmTable, confirmSelectedTableNo } = useContext(GlobalContext);
 
-  const { changeTableOnSubmit, customerName } =
+  const { changeTableOnSubmit, customerName, CustomerFieldName } =
     useContext(GlobalContext).tableProvider;
 
   const confirmSubmit = async () => {
-    await changeTableOnSubmit(confirmSelectedTableNo as Table["tableNo"]);
+    await changeTableOnSubmit(
+      customerName as Table["customerName"],
+      confirmSelectedTableNo as Table["tableNo"]
+    );
 
     setConfirmTable(false);
 
     navigator("/menu");
   };
-
   const cancelSubmit = () => {
     setConfirmTable(false);
   };
@@ -27,7 +29,7 @@ export const ConfirmTable = () => {
     <div className={css["overlay"]}>
       <div className={css["popup"]}>
         <h2>ยืนยันโต๊ะ {confirmSelectedTableNo} </h2>{" "}
-        <form onSubmit={confirmSubmit}>
+        <form onSubmit={CustomerFieldName}>
           <div className={css.divInput}>
             <p>กรอกชื่อเล่น</p>
             <input
@@ -35,6 +37,7 @@ export const ConfirmTable = () => {
               name="name"
               type="text"
               className={css.input}
+              onChange={() => {}}
             />
           </div>
           <div className={css.divButton}>
