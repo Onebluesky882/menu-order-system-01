@@ -5,5 +5,3 @@ export type Table = {
   position?: "left" | "right";
   customerName?: "";
 };
-
-export type TableReserve = Table & { name?: string };

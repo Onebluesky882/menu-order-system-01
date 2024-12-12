@@ -6,7 +6,7 @@ import {
   OrderTableNo,
   OrderTables,
 } from "@/types/Order";
-import { Table, TableReserve } from "@/types/TableOrder";
+import { Table } from "@/types/TableOrder";
 import {
   transformKeysToCamelCase,
   transformKeysToSnakeCase,
@@ -27,7 +27,10 @@ export const useTable = () => {
   const [table, setTable] = useState<Table>(defaultTable);
   const [allTables, setAllTables] = useState<Table[]>([]);
   const [orderTables, setOrderTables] = useState<OrderTables[]>([]);
-  const [client, setClient] = useState<string>("");
+
+  const [confirmSelectedTableNo, setConfirmSelectedTableNo] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     loadOrder();
@@ -212,14 +215,13 @@ export const useTable = () => {
       customerName: getDataForm.get("name"),
     };
 
-    console.log("table.tableNo :", table);
-    console.log("convert  :", convert);
     const transform = transformKeysToSnakeCase(convert);
     console.log("Transformed data:", transform);
+    console.log("confirmSelectedTableNo:", confirmSelectedTableNo);
     const { data, error } = await supabase
       .from("tables")
       .update(transform)
-      .eq("table_no", table);
+      .eq("table_no", confirmSelectedTableNo);
     if (data) {
       console.log("Update successful:", data);
     } else {
@@ -228,8 +230,6 @@ export const useTable = () => {
   };
 
   return {
-    client,
-    setClient,
     orders,
     setOrders,
     submitCart,
@@ -242,6 +242,8 @@ export const useTable = () => {
     setTableOrder,
     orderTables,
     CustomerFieldName,
+    setConfirmSelectedTableNo,
+    confirmSelectedTableNo,
   };
 };
 
@@ -257,6 +259,9 @@ export const defaultTableProvider = {
   ordersTableNo: [],
   setOrdersTableNo: () => null,
   orderTables: [],
-  setClient: () => Promise.resolve(),
   CustomerFieldName: () => Promise.resolve(),
+  setConfirmSelectedTableNo: () => null,
+  confirmSelectedTableNo: null,
+  tableOrder: [],
+  setTableOrder: () => null,
 };

@@ -1,7 +1,8 @@
-import { table as tableData } from "@/Data/TableData";
+import tableLocal from "@/Data/TableData";
+("@/Data/TableData");
 import css from "./Table.module.css";
 import { ConfirmTable } from "./ConfirmTable";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 
 type TableMapProps = {
@@ -17,19 +18,20 @@ export const TablesMap = ({
   setConfirmSelectedTableNo,
   client,
 }: TableMapProps) => {
-  const tableRightSide = tableData.filter((t) => t.tableNo.startsWith("A"));
-  const tableLeftSide = tableData.filter((t) => t.tableNo.startsWith("B"));
+  const tableRightSide = tableLocal.filter((t) => t.tableNo.startsWith("A"));
+  const tableLeftSide = tableLocal.filter((t) => t.tableNo.startsWith("B"));
 
-  const { allTables } = useContext(GlobalContext).tableProvider;
+  const { tableObject } = useContext(GlobalContext).tableProvider;
 
+  console.log();
   return (
     <TableContainer>
       <div className={css["table-container-section-left"]}>
         {tableLeftSide.map((t) => {
-          const tableStatus = allTables.find(
+          const tableStatus = tableObject.find(
             (table) => table.tableNo === t.tableNo
           )?.status;
-
+          console.log(t.tableNo);
           return (
             <>
               <TableCard
@@ -49,7 +51,7 @@ export const TablesMap = ({
 
       <div className={css["table-container-section-right"]}>
         {tableRightSide.map((t) => {
-          const tableStatus = allTables.find(
+          const tableStatus = tableObject.find(
             (table) => table.tableNo === t.tableNo
           )?.status;
           return (
