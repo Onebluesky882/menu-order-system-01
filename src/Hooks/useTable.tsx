@@ -1,5 +1,4 @@
 import { getMenuItem, menu } from "@/Data/Menu";
-import { tableLocal } from "@/Data/TableData";
 import {
   CartOrder,
   Order,

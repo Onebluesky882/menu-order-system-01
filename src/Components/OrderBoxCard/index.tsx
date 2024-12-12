@@ -1,7 +1,6 @@
 import { CartOrder } from "@/types/Order";
 import css from "./style.module.css";
 import { getMenuItem } from "@/Data/Menu";
-import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 
 type OrderBoxCardProps = {
   order: CartOrder;
