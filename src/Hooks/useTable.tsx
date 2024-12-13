@@ -156,7 +156,6 @@ export const useTable = () => {
     customerName: Table["customerName"],
     No: Table["tableNo"]
   ) => {
-    // todo
     const newTable = {
       ...defaultTable,
       tableNo: No,
@@ -183,16 +182,6 @@ export const useTable = () => {
   };
 
   // add customer name to table
-  const CustomerFieldName = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const nameField = new FormData(e.currentTarget);
-
-    const name = nameField.get("name");
-
-    if (name) {
-      setCustomerName(name as string);
-    }
-  };
 
   return {
     orders,
@@ -206,8 +195,9 @@ export const useTable = () => {
     loadOrderTableNo,
     setTableOrder,
     orderTables,
-    CustomerFieldName,
+
     customerName,
+    setCustomerName,
   };
 };
 
@@ -223,8 +213,9 @@ export const defaultTableProvider = {
   ordersTableNo: [],
   setOrdersTableNo: () => null,
   orderTables: [],
-  CustomerFieldName: () => Promise.resolve(),
+
   tableOrder: [],
   setTableOrder: () => null,
   customerName: "",
+  setCustomerName: () => null,
 };
