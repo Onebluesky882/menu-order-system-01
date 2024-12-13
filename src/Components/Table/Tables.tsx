@@ -30,20 +30,17 @@ export const TablesMap = ({
           const tableStatus = tableObject.find(
             (table) => table.tableNo === t.tableNo
           )?.status;
-
           return (
-            <>
-              <TableCard
-                key={t.tableNo}
-                tableNo={t.tableNo}
-                setConfirmSelectedTableNo={(tableNo) =>
-                  setConfirmSelectedTableNo(tableNo)
-                }
-                setConfirmTable={setConfirmTable}
-                status={tableStatus as unknown as string}
-                client={client || ""}
-              />
-            </>
+            <TableCard
+              key={t.tableNo}
+              tableNo={t.tableNo}
+              setConfirmSelectedTableNo={(tableNo) =>
+                setConfirmSelectedTableNo(tableNo)
+              }
+              setConfirmTable={setConfirmTable}
+              status={tableStatus as unknown as string}
+              client={client || ""}
+            />
           );
         })}
       </div>
