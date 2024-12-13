@@ -16,7 +16,9 @@ const Menu = () => {
     <div>
       <h2 style={{ textAlign: "center", marginTop: "20px" }}>
         {" "}
-        {table.tableNo === "0" ? "เมนูอาหาร" : `โต๊ะ ${table.tableNo}`}
+        {table.tableNo === "0"
+          ? "เมนูอาหาร"
+          : `โต๊ะ ${table.tableNo} : ${table.customerName}`}
       </h2>
 
       <SidebarLeft />

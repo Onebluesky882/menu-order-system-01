@@ -34,7 +34,7 @@ export const OrderTables = ({
             (sum, order) => sum + order.amount,
             0
           );
-          console.log("matchTable :", amount);
+
           return (
             <OrderTableCard
               key={table.tableNo}

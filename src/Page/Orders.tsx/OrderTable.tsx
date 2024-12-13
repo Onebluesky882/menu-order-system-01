@@ -1,17 +1,33 @@
 import OrderTableCard from "@/Components/OrderTables/OrderTableCard";
 import { GlobalContext } from "@/Hooks/GlobalContext";
+import { Table } from "@/types/TableOrder";
 import { useContext } from "react";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const OrderTable = () => {
   const { tableNo } = useParams();
-  const { tableOrder } = useContext(GlobalContext).tableProvider;
+  const { tableOrder, tableObject } = useContext(GlobalContext).tableProvider;
+
+  const { tableNoReOrder, table } = useContext(GlobalContext).tableProvider;
+  const No = tableObject.find(
+    (table) => table.tableNo === tableNo?.toUpperCase()
+  );
+
+  const navigator = useNavigate();
+  const handleSubmit = () => {
+    tableNoReOrder(No?.tableNo as Table["tableNo"]);
+    navigator("/menu");
+  };
 
   return (
     <div>
-      <h1>{tableNo}</h1>
-      <h2>to do chage status update order when 'done'</h2>
+      <h2 style={{ textAlign: "center" }}>{tableNo?.toUpperCase()}</h2>
+      {No?.customerName && (
+        <h2
+          style={{ textAlign: "center" }}
+        >{`โต๊ะคุณ : ${No.customerName}`}</h2>
+      )}
       {tableOrder.map((item) => (
         <OrderTableCard
           key={item.id}
@@ -23,7 +39,7 @@ const OrderTable = () => {
         />
       ))}
       <div>
-        <button>Add more item</button>
+        <button onClick={handleSubmit}>Add more item</button>
         <button>Check the bill</button>
       </div>
     </div>

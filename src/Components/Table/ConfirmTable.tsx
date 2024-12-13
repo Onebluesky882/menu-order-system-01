@@ -14,8 +14,8 @@ export const ConfirmTable = () => {
   const [, setValue] = useState("");
   const confirmSubmit = async () => {
     await changeTableOnSubmit(
-      customerName as Table["customerName"],
-      confirmSelectedTableNo as Table["tableNo"]
+      confirmSelectedTableNo as Table["tableNo"],
+      customerName as Table["customerName"]
     );
 
     setConfirmTable(false);

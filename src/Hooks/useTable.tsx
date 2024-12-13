@@ -58,15 +58,17 @@ export const useTable = () => {
           event: "*",
           schema: "public",
           table: "tables",
+          filter: "status",
         },
         (payload: unknown) => {
           console.log("Table status payload:", payload);
           loadTable(); // Your function to handle table status updates
         }
       )
+
       .subscribe((status) => {
         if (!status) {
-          console.log("error");
+          console.error("Error subscribing to the channel");
         }
       });
 
@@ -153,8 +155,8 @@ export const useTable = () => {
   };
 
   const changeTableOnSubmit = async (
-    customerName: Table["customerName"],
-    No: Table["tableNo"]
+    No: Table["tableNo"],
+    customerName: Table["customerName"]
   ) => {
     const newTable = {
       ...defaultTable,
@@ -181,7 +183,19 @@ export const useTable = () => {
     }
   };
 
-  // add customer name to table
+  const tableNoReOrder = async (no: Table["tableNo"]) => {
+    const { data } = await supabase.from("tables").select().eq("table_no", no);
+
+    if (data && data.length >= 0) {
+      const tableOrder = transformKeysToCamelCase(data[0]);
+
+      setTable({
+        ...defaultTable,
+        tableNo: tableOrder.tableNo,
+        customerName: tableOrder.customerName,
+      });
+    }
+  };
 
   return {
     orders,
@@ -195,9 +209,9 @@ export const useTable = () => {
     loadOrderTableNo,
     setTableOrder,
     orderTables,
-
     customerName,
     setCustomerName,
+    tableNoReOrder,
   };
 };
 
@@ -213,9 +227,9 @@ export const defaultTableProvider = {
   ordersTableNo: [],
   setOrdersTableNo: () => null,
   orderTables: [],
-
   tableOrder: [],
   setTableOrder: () => null,
   customerName: "",
   setCustomerName: () => null,
+  tableNoReOrder: () => Promise.resolve(),
 };
