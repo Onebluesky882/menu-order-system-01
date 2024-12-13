@@ -11,7 +11,7 @@ export const ConfirmTable = () => {
   const { changeTableOnSubmit, customerName, setCustomerName } =
     useContext(GlobalContext).tableProvider;
   const [isValid, setIsValid] = useState(false);
-  const [value, setValue] = useState("");
+  const [, setValue] = useState("");
   const confirmSubmit = async () => {
     await changeTableOnSubmit(
       customerName as Table["customerName"],
