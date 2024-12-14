@@ -1,3 +1,4 @@
+import css from "../../Components/OrderTablesMapCard/styles.module.css";
 import OrderTableCard, {
   OrderTableNoContainer,
 } from "@/Components/OrderTablesMapCard/OrderTableCard";
@@ -17,19 +18,26 @@ const OrderTable = () => {
   );
 
   const navigator = useNavigate();
+
   const handleSubmit = () => {
-    tableNoReOrder(No?.tableNo as Table["tableNo"]);
-    navigator("/menu");
+    if (No?.tableNo) {
+      tableNoReOrder(No?.tableNo as Table["tableNo"]);
+      navigator("/menu");
+    }
   };
+  if (!tableObject || !tableOrder) {
+    return <p>Loading...</p>;
+  }
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <h2 style={{ textAlign: "center" }}>{tableNo?.toUpperCase()}</h2>
       {No?.customerName && (
         <h2
           style={{ textAlign: "center" }}
         >{`โต๊ะคุณ : ${No.customerName}`}</h2>
       )}
+
       <OrderTableNoContainer>
         {tableOrder.map((item) => (
           <OrderTableCard
@@ -42,9 +50,13 @@ const OrderTable = () => {
           />
         ))}
       </OrderTableNoContainer>
-      <div>
-        <button onClick={handleSubmit}>Add more item</button>
-        <button>Check the bill</button>
+      <div className={css.buttonDiv}>
+        {tableOrder.length > 0 && (
+          <div>
+            <button onClick={handleSubmit}>Add more item</button>
+            <button>Check the bill</button>
+          </div>
+        )}
       </div>
     </div>
   );

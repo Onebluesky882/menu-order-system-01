@@ -93,7 +93,7 @@
   padding: 10px;
   justify-content: center;
   overflow: scroll;
-  max-height: 70vh;
+  min-height: 100vh;
   .grid {
     display: grid;
     grid-template-columns: 250px 250px;
@@ -114,6 +114,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+}
+
+.buttonDiv {
+  position: absolute;
+  padding: 4px;
+
+  justify-content: center;
+  gap: 10px;
+  outline: 1px solid red;
+  bottom: 20%;
+
+  justify-content: space-between;
+
+  button {
+    outline: none;
+    border: none;
+    border-radius: 999px;
+    padding: 20px;
+    z-index: -1;
   }
 }
 
