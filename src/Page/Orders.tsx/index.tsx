@@ -1,4 +1,4 @@
-import { OrderTables } from "@/Components/OrderTables";
+import { OrderTables } from "@/Components/OrderTablesMapCard";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";

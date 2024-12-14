@@ -1,4 +1,6 @@
-import OrderTableCard from "@/Components/OrderTables/OrderTableCard";
+import OrderTableCard, {
+  OrderTableNoContainer,
+} from "@/Components/OrderTablesMapCard/OrderTableCard";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import { Table } from "@/types/TableOrder";
 import { useContext } from "react";
@@ -9,7 +11,7 @@ const OrderTable = () => {
   const { tableNo } = useParams();
   const { tableOrder, tableObject } = useContext(GlobalContext).tableProvider;
 
-  const { tableNoReOrder, table } = useContext(GlobalContext).tableProvider;
+  const { tableNoReOrder } = useContext(GlobalContext).tableProvider;
   const No = tableObject.find(
     (table) => table.tableNo === tableNo?.toUpperCase()
   );
@@ -28,16 +30,18 @@ const OrderTable = () => {
           style={{ textAlign: "center" }}
         >{`โต๊ะคุณ : ${No.customerName}`}</h2>
       )}
-      {tableOrder.map((item) => (
-        <OrderTableCard
-          key={item.id}
-          amount={item.amount}
-          status={"ORDERED"}
-          createdAt={item.createdAt}
-          name={item.name}
-          image={item.image}
-        />
-      ))}
+      <OrderTableNoContainer>
+        {tableOrder.map((item) => (
+          <OrderTableCard
+            key={item.id}
+            amount={item.amount}
+            status={"ORDERED"}
+            createdAt={item.createdAt}
+            name={item.name}
+            image={item.image}
+          />
+        ))}
+      </OrderTableNoContainer>
       <div>
         <button onClick={handleSubmit}>Add more item</button>
         <button>Check the bill</button>
