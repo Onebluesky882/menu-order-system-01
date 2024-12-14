@@ -14,7 +14,6 @@ const Footer = () => {
         <Promotions />
         <Tables />
         <Menu />
-        <Waiter />
         <CheckOrder />
       </div>
       <OrderBox />
@@ -97,18 +96,6 @@ const Menu = () => {
   );
 };
 
-const Waiter = () => {
-  return (
-    <Link to="/waiter" className={css["link"]}>
-      <ul className={css["ul"]}>
-        <li>
-          <PiCallBellFill />
-        </li>
-      </ul>
-      Waiter
-    </Link>
-  );
-};
 const CheckOrder = () => {
   const { setTableOrder } = useContext(GlobalContext).tableProvider;
   return (
