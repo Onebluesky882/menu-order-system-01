@@ -18,7 +18,6 @@ const OrderTableNoCard = ({
   name,
   image,
 }: OrderTableProps) => {
-  const [minutes, setMinutes] = useState(0);
   const [second, setSecond] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -46,7 +45,8 @@ const OrderTableNoCard = ({
         <p>amount : {amount} </p>
 
         <p>
-          Elapsed : {minutes}:{second}
+          createAdd : {createdAt} {doneAt}
+          Elapsed : {}:{second}
         </p>
       </div>
       <div className={css.div3}>
