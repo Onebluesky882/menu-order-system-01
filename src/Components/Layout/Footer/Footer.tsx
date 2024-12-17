@@ -27,18 +27,14 @@ const OrderBox = () => {
 
   const totalAmount = orders.reduce((sum, item) => sum + item.amount, 0);
   return (
-    <div className={css["Orderbox"]}>
+    <div className={css["OrderBox"]}>
       <div style={{ position: "relative" }}>
         <PiShoppingCartSimple
           color="white"
           size={40}
           textAnchor="click"
           onClick={() => setClick((prev) => !prev)}
-          style={{
-            background: "#87C990",
-            padding: "10px",
-            borderRadius: "100px",
-          }}
+          className={css.icon}
         />
         <p
           style={{
