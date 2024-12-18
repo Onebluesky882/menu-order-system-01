@@ -1,4 +1,4 @@
-import ButtonCartOrder from "@/Components/ButtonCartOrder";
+import ButtonCartOrder from "@/Components/ButtonOrderCart/ButtonCartOrder";
 import {
   CartOrderContainer,
   CartOrderList,
