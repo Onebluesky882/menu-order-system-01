@@ -10,7 +10,7 @@ const ButtonCartOrder = ({
 }) => {
   return (
     <div className={css["container"]}>
-      <div style={{}}>
+      <div>
         <button className={css["button-reset"]} onClick={resetOrders}>
           reset
         </button>
