@@ -1,4 +1,3 @@
-import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 import { CartOrder } from "@/types/Order";
 import { getMenuItem } from "@/Data/Menu";
 import css from "./CartOrderCard.module.css";
