@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 
 type OrderTableProps = {
-  client?: string;
   status: string;
   loadOrderTableNo: (table: string) => void;
   setTableOrder: () => void;
@@ -16,7 +15,6 @@ export const OrderTables = ({
   navigate,
   setTableOrder,
   status,
-  client,
 }: OrderTableProps) => {
   const tableRightSide = tableLocal.filter((t) => t.tableNo.startsWith("A"));
   const tableLeftSide = tableLocal.filter((t) => t.tableNo.startsWith("B"));
@@ -25,21 +23,27 @@ export const OrderTables = ({
     <TableContainer>
       <div className={css["table-container-section-left"]}>
         {tableLeftSide.map((table) => {
-          const { orderTables } = useContext(GlobalContext).tableProvider;
+          const { orderTables, tableObject } =
+            useContext(GlobalContext).tableProvider;
           const matchTable = orderTables.filter(
             (t) => t.tableNo === table.tableNo
           );
 
           const amount = matchTable.reduce(
-            (sum, order) => sum + order.amount,
+            (acc, order) => acc + order.amount,
             0
+          );
+
+          const tableClient = tableObject.find(
+            (t) => t.status === "OCCUPIED" && t.tableNo === table.tableNo
           );
 
           return (
             <OrderTableCard
               key={table.tableNo}
-              status={status}
-              client={client || ""}
+              // todo status of table
+              status={tableClient?.status as string}
+              client={(tableClient?.customerName as string) || ""}
               tableNo={table.tableNo}
               loadOrderTableNo={() => loadOrderTableNo(table.tableNo)}
               navigate={navigate}
@@ -52,20 +56,26 @@ export const OrderTables = ({
 
       <div className={css["table-container-section-right"]}>
         {tableRightSide.map((table) => {
-          const { orderTables } = useContext(GlobalContext).tableProvider;
+          const { orderTables, tableObject } =
+            useContext(GlobalContext).tableProvider;
           const matchTable = orderTables.filter(
-            (t) => t.tableNo === table.tableNo && t.status === "ORDERED"
+            (t) => t.tableNo === table.tableNo
           );
 
           const amount = matchTable.reduce(
             (sum, order) => sum + order.amount,
             0
           );
+
+          const customerName = tableObject.find(
+            (t) => t.tableNo === table.tableNo && t.status === "OCCUPIED"
+          )?.customerName;
+
           return (
             <OrderTableCard
               key={table.tableNo}
               status={status}
-              client={client || ""}
+              client={customerName as string}
               tableNo={table.tableNo}
               loadOrderTableNo={() =>
                 loadOrderTableNo(table.tableNo as unknown as string)
@@ -124,15 +134,28 @@ export const OrderTableCard = ({
       }}
       onClick={handleSubmit}
     >
-      {" "}
       <h3>{tableNo}</h3>
       {client !== "" && (
-        <p style={{ fontWeight: "bolder", fontSize: "25px" }}>{`${client}`}</p>
+        <p
+          style={{
+            fontWeight: "bolder",
+            fontSize: "25px",
+            ...TableStatusColor(orderAmount),
+          }}
+        >{`${client}`}</p>
       )}
-      {orderAmount !== 0 && (
-        <p style={{ fontWeight: "bolder", fontSize: "20px" }}>
+      {orderAmount !== 0 || status === "OCCUPIED" ? (
+        <p
+          style={{
+            fontWeight: "bolder",
+            fontSize: "20px",
+            ...TableStatusColor(orderAmount),
+          }}
+        >
           รายการอาหาร : {orderAmount}{" "}
         </p>
+      ) : (
+        <p>รายการอาหารเสร็จสมบูรณ์</p>
       )}
       <p>{`${status} `}</p>
     </div>
@@ -144,9 +167,9 @@ export const TableStatusColor = (count: number): React.CSSProperties => {
     case count === 0:
       return { backgroundColor: "#B4D59D" };
     case count > 1 && count <= 5:
-      return { backgroundColor: "#F1BF42" };
+      return { backgroundColor: "#EF9364", color: "white" };
     case count > 5 && count <= 20:
-      return { backgroundColor: "#C99D6B" };
+      return { backgroundColor: "#D85543", color: "white" };
 
     default:
       return {

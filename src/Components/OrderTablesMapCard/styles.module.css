@@ -14,7 +14,10 @@
   padding: 20px;
 }
 .table-section {
-  background-color: palevioletred;
+  border-radius: 8px;
+  border: 1px solid bisque;
+  background-color: #fffdd0;
+  padding: 20px;
   display: flex;
   position: relative;
   margin: 0 auto;

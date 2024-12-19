@@ -10,13 +10,13 @@ const Orders = () => {
 
   return (
     <div>
-      <h1></h1>
+      <h1 style={{ textAlign: "center", marginTop: "20px" }}>Order tables</h1>
       <OrderTables
         loadOrderTableNo={loadOrderTableNo}
         navigate={navigator}
         setTableOrder={() => setTableOrder(tableOrder)}
-        status={"status of orders"}
-        client={"client name"}
+        // todo
+        status={""}
       />
     </div>
   );
