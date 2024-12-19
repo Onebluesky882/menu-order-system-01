@@ -51,7 +51,7 @@
 .menuDiv {
   display: flex;
   position: relative;
-  right: 200px;
+  right: 160px;
   .restaurantIcon {
     background: #cb1649;
     padding: 10px;
@@ -60,10 +60,21 @@
   }
 }
 
+.menuPopupDiv {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: rgb(248, 242, 196);
+  bottom: 75px;
+  right: 165px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
 .cartDiv {
   display: flex;
   position: relative;
-  right: 120px;
+  right: 80px;
 
   .iconCart {
     background: #87c990;

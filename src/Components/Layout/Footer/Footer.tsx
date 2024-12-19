@@ -2,17 +2,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import css from "./Footer.module.css";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
-import OrderBoxCard from "@/Components/OrderBoxCard";
-import { PiShoppingCartSimple } from "react-icons/pi";
 import { CheckOrder, Menu, Promotions, Tables } from "./FooterMenu";
 import { MenuIcon } from "./MenuIcon";
 import { Table } from "@/types/TableOrder";
+import { CartMenuIcon } from "./CartMenuIcon";
 
-type FooterProps = {
-  customerName: string;
-  tableNo: string;
-  onSubmitMenu: () => null;
-};
 const Footer = () => {
   const { tableNo } = useParams();
   const { tableObject, tableNoReOrder } =
@@ -21,6 +15,10 @@ const Footer = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const No = tableObject.find((t) => t.tableNo === tableNo?.toUpperCase());
+
+  useEffect(() => {
+    setOpenMenu(false);
+  }, [location.pathname]);
 
   const handleMenu = () => {
     if (!No?.tableNo) {
@@ -38,7 +36,7 @@ const Footer = () => {
       navigator("/menu");
     }
   };
-  console.log("No?.tableNo  :", No?.tableNo);
+
   return (
     <footer className={css["footer-style"]}>
       <div className={css["section"]}>
@@ -49,71 +47,20 @@ const Footer = () => {
       </div>
       <div className={css.MenuIconBox}>
         <MenuIcon onSubmitMenu={handleMenu} />
-        <CheckMenuItem />
+        <CartMenuIcon />
       </div>
-
+      {/* // todo move to file MenuIcon */}
       {openMenu && (
-        <div>
+        <div className={css.menuPopupDiv}>
           <h3>
             {No?.tableNo}:{No?.customerName}
           </h3>
           <button onClick={addMoreMenu}>Add more item</button>
+          // todo
           <button>Check the bill</button>
         </div>
       )}
     </footer>
-  );
-};
-
-const CheckMenuItem = () => {
-  const { orders, onAdd, onMinus } = useContext(GlobalContext).cartProvider;
-  const [popUp, setPopup] = useState(false);
-
-  const totalAmount = orders.reduce((sum, item) => sum + item.amount, 0);
-
-  const navigator = useNavigate();
-
-  const handleSubmit = () => {
-    if (orders.length > 0) {
-      setPopup((prev) => !prev);
-    }
-  };
-
-  useEffect(() => {
-    setPopup(false);
-  }, [location.pathname]);
-  return (
-    <div className={css["OrderBox"]}>
-      <div onClick={handleSubmit} className={css.cartDiv}>
-        <PiShoppingCartSimple
-          color="white"
-          size={42}
-          className={css.iconCart}
-        />
-        <p className={css.p}>{totalAmount}</p>
-      </div>
-
-      {popUp && (
-        <div className={css["cart-popup"]}>
-          {orders.map((order) => (
-            <OrderBoxCard
-              key={order.menuId}
-              order={order}
-              onAdd={onAdd}
-              onMinus={onMinus}
-            />
-          ))}
-          <div className={css.buttonDiv}>
-            <button className={css.button} onClick={() => navigator("/menu")}>
-              ย้อนกลับ
-            </button>
-            <button className={css.button} onClick={() => navigator("/cart")}>
-              ยืนยัน
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
   );
 };
 
