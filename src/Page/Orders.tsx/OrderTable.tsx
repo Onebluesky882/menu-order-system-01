@@ -1,30 +1,19 @@
-import css from "../../Components/OrderTablesMapCard/styles.module.css";
 import OrderTableCard, {
   OrderTableNoContainer,
 } from "@/Components/OrderTablesMapCard/OrderTableCard";
 import { GlobalContext } from "@/Hooks/GlobalContext";
-import { Table } from "@/types/TableOrder";
 import { useContext } from "react";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const OrderTable = () => {
   const { tableNo } = useParams();
   const { tableOrder, tableObject } = useContext(GlobalContext).tableProvider;
 
-  const { tableNoReOrder } = useContext(GlobalContext).tableProvider;
   const No = tableObject.find(
     (table) => table.tableNo === tableNo?.toUpperCase()
   );
 
-  const navigator = useNavigate();
-
-  const handleSubmit = () => {
-    if (No?.tableNo) {
-      tableNoReOrder(No?.tableNo as Table["tableNo"]);
-      navigator("/menu");
-    }
-  };
   if (!tableObject || !tableOrder) {
     return <p>Loading...</p>;
   }
@@ -50,14 +39,6 @@ const OrderTable = () => {
           />
         ))}
       </OrderTableNoContainer>
-      <div className={css.buttonDiv}>
-        {tableOrder.length > 0 && (
-          <div>
-            <button onClick={handleSubmit}>Add more item</button>
-            <button>Check the bill</button>
-          </div>
-        )}
-      </div>
     </div>
   );
 };

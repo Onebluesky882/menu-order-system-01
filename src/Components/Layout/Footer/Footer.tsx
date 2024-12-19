@@ -1,13 +1,44 @@
-import { FaClipboardList } from "react-icons/fa";
-import { PiCallBellFill } from "react-icons/pi";
-import { Link } from "react-router-dom";
-import { MdTableBar } from "react-icons/md";
+import { useNavigate, useParams } from "react-router-dom";
 import css from "./Footer.module.css";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@/Hooks/GlobalContext";
 import OrderBoxCard from "@/Components/OrderBoxCard";
 import { PiShoppingCartSimple } from "react-icons/pi";
+import { CheckOrder, Menu, Promotions, Tables } from "./FooterMenu";
+import { MenuIcon } from "./MenuIcon";
+import { Table } from "@/types/TableOrder";
+
+type FooterProps = {
+  customerName: string;
+  tableNo: string;
+  onSubmitMenu: () => null;
+};
 const Footer = () => {
+  const { tableNo } = useParams();
+  const { tableObject, tableNoReOrder } =
+    useContext(GlobalContext).tableProvider;
+  const navigator = useNavigate();
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const No = tableObject.find((t) => t.tableNo === tableNo?.toUpperCase());
+
+  const handleMenu = () => {
+    if (!No?.tableNo) {
+      alert("กรุณาเลือกโต๊ะที่นั่ง");
+      navigator("/orders");
+      setOpenMenu(false);
+      return;
+    }
+    setOpenMenu((prev) => !prev);
+  };
+
+  const addMoreMenu = () => {
+    if (No?.tableNo) {
+      tableNoReOrder(No?.tableNo as Table["tableNo"]);
+      navigator("/menu");
+    }
+  };
+  console.log("No?.tableNo  :", No?.tableNo);
   return (
     <footer className={css["footer-style"]}>
       <div className={css["section"]}>
@@ -16,39 +47,53 @@ const Footer = () => {
         <Menu />
         <CheckOrder />
       </div>
-      <OrderBox />
+      <div className={css.MenuIconBox}>
+        <MenuIcon onSubmitMenu={handleMenu} />
+        <CheckMenuItem />
+      </div>
+
+      {openMenu && (
+        <div>
+          <h3>
+            {No?.tableNo}:{No?.customerName}
+          </h3>
+          <button onClick={addMoreMenu}>Add more item</button>
+          <button>Check the bill</button>
+        </div>
+      )}
     </footer>
   );
 };
 
-const OrderBox = () => {
+const CheckMenuItem = () => {
   const { orders, onAdd, onMinus } = useContext(GlobalContext).cartProvider;
-  const [click, setClick] = useState(false);
+  const [popUp, setPopup] = useState(false);
 
   const totalAmount = orders.reduce((sum, item) => sum + item.amount, 0);
+
+  const navigator = useNavigate();
+
+  const handleSubmit = () => {
+    if (orders.length > 0) {
+      setPopup((prev) => !prev);
+    }
+  };
+
+  useEffect(() => {
+    setPopup(false);
+  }, [location.pathname]);
   return (
     <div className={css["OrderBox"]}>
-      <div style={{ position: "relative" }}>
+      <div onClick={handleSubmit} className={css.cartDiv}>
         <PiShoppingCartSimple
           color="white"
-          size={40}
-          textAnchor="click"
-          onClick={() => setClick((prev) => !prev)}
-          className={css.icon}
+          size={42}
+          className={css.iconCart}
         />
-        <p
-          style={{
-            display: "block",
-            color: "red",
-            position: "absolute",
-            transform: " translate(240%, -200%)",
-          }}
-        >
-          {totalAmount}
-        </p>
+        <p className={css.p}>{totalAmount}</p>
       </div>
 
-      {click && (
+      {popUp && (
         <div className={css["cart-popup"]}>
           {orders.map((order) => (
             <OrderBoxCard
@@ -58,69 +103,18 @@ const OrderBox = () => {
               onMinus={onMinus}
             />
           ))}
-          <button>reset</button>
-          <button>Confirm Order</button>
+          <div className={css.buttonDiv}>
+            <button className={css.button} onClick={() => navigator("/menu")}>
+              ย้อนกลับ
+            </button>
+            <button className={css.button} onClick={() => navigator("/cart")}>
+              ยืนยัน
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-const Tables = () => {
-  return (
-    <Link to="/tables" className={css["link"]}>
-      <ul className={css["ul"]}>
-        <li>
-          <MdTableBar />
-        </li>
-      </ul>
-      Tables
-    </Link>
-  );
-};
-
-const Menu = () => {
-  return (
-    <Link to="/menu" className={css["link"]}>
-      <ul className={css["ul"]}>
-        <li>
-          <FaClipboardList />
-        </li>
-      </ul>
-      menu
-    </Link>
-  );
-};
-
-const CheckOrder = () => {
-  const { setTableOrder } = useContext(GlobalContext).tableProvider;
-  return (
-    <Link
-      to="/orders"
-      className={css["link"]}
-      onClick={() => {
-        setTableOrder([]);
-      }}
-    >
-      <ul className={css["ul"]}>
-        <li>
-          <PiCallBellFill />
-        </li>
-      </ul>
-      Order Table
-    </Link>
-  );
-};
-const Promotions = () => {
-  return (
-    <Link to={"/promotions"} className={css["link"]}>
-      <ul className={css["ul"]}>
-        <li>
-          <PiCallBellFill />
-        </li>
-      </ul>
-      Promotions
-    </Link>
-  );
-};
 export default Footer;
