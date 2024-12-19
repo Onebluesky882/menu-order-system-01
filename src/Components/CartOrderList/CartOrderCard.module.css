@@ -1,23 +1,22 @@
 .container {
-  display: flex;
-  box-sizing: content-box;
-  width: 100%;
-}
-.section {
-  display: flex;
-  align-items: start;
-  border-radius: 12px;
-  gap: 10px;
-  padding: 10px;
-  border: 1px solid rgb(230, 248, 205);
-  margin: 5px;
+  margin: 10px;
   /* From https://css.glass */
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.75);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.section {
+  display: flex;
+  justify-self: start;
+  padding: 10px;
+  img {
+    padding-right: 8px;
+  }
+  z-index: 1;
 }
 
 .CartOrderContainer {
@@ -32,9 +31,7 @@
 }
 
 .orderIconBox {
-  border: 1px solid rgba(147, 146, 146, 0.614);
   display: flex;
-  padding-left: 20px;
-  align-items: center;
-  gap: 20px;
+  gap: 10px;
+  padding: 8px 4px 0px 0px;
 }

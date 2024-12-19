@@ -2,6 +2,7 @@ import { CiCircleMinus, CiCirclePlus } from "react-icons/ci";
 import { CartOrder } from "@/types/Order";
 import { getMenuItem } from "@/Data/Menu";
 import css from "./CartOrderCard.module.css";
+import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 
 type CartOrderCardProps = {
   order: CartOrder;
@@ -19,7 +20,7 @@ export const CartOrderList = ({
 
   return (
     <div className={css["container"]}>
-      <div className={css["section"]}>
+      <div className={css.section}>
         <img src={menu.image} width={120} />
         <div>
           <div>
@@ -30,14 +31,14 @@ export const CartOrderList = ({
             <p>จำนวน : {amount}</p>
           </div>
           <div className={css.orderIconBox}>
-            <CiCircleMinus
+            <FaCircleMinus
               size={28}
-              color="red"
+              color="#d41434"
               onClick={() => onMinus({ menuId: order.menuId })}
             />
-            <CiCirclePlus
+            <FaCirclePlus
               size={28}
-              color="green"
+              color="#50895d"
               onClick={() => onAdd({ menuId: order.menuId })}
             />
           </div>
