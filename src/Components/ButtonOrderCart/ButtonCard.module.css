@@ -1,26 +1,35 @@
 .container {
   display: flex;
   justify-content: center;
+  gap: 10px;
 }
 
 .button-confirm {
   padding: 15px 25px;
   color: #50895d;
   margin-top: 10px;
-  border-radius: 0px 10px 10px 0px;
+  border-radius: 12px;
   font-size: 18px;
   font-weight: bold;
   outline: none;
   border: none;
+  &:hover {
+    background-color: #50895d;
+    color: white;
+  }
 }
 
 .button-reset {
   padding: 15px 25px;
   color: #d41434;
   margin-top: 10px;
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 12px;
   font-size: 18px;
   font-weight: bold;
   outline: none;
   border: none;
+  &:hover {
+    background-color: #d41434;
+    color: white;
+  }
 }

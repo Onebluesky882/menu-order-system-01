@@ -1,4 +1,4 @@
-import css from "./style/ButtonCard.module.css";
+import css from "./ButtonCard.module.css";
 import React from "react";
 
 const ButtonCartOrder = ({
@@ -11,7 +11,6 @@ const ButtonCartOrder = ({
   return (
     <div className={css["container"]}>
       <div>
-        // todo
         <button className={css["button-reset"]} onClick={resetOrders}>
           reset
         </button>
